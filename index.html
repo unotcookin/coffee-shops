@@ -40,7 +40,7 @@
       --completed-border: #25362C;
       --completed-check: #406352;
       --toggle-bg: rgba(255, 255, 255, 0.2);
-      --toggle-thumb: #1A231F;
+      --toggle-thumb: #E2ECE6;
     }
 
     body {
@@ -86,9 +86,9 @@
     .theme-toggle-pill {
       background: var(--toggle-bg);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      width: 60px;
-      height: 30px;
-      border-radius: 30px;
+      width: 64px;
+      height: 32px;
+      border-radius: 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -99,13 +99,14 @@
       -webkit-tap-highlight-color: transparent;
       backdrop-filter: blur(4px);
       transition: background 0.3s ease;
+      box-sizing: border-box;
     }
 
     .theme-toggle-thumb {
       position: absolute;
       left: 4px;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       background: var(--toggle-thumb);
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -117,13 +118,22 @@
     }
 
     [data-theme="dark"] .theme-toggle-thumb {
-      transform: translateX(30px);
+      transform: translateX(32px);
     }
 
     .toggle-icon {
-      font-size: 12px;
+      font-size: 13px;
       z-index: 1;
       user-select: none;
+      line-height: 1;
+    }
+
+    .sun-icon {
+      color: #FFFFFF;
+    }
+
+    .moon-icon {
+      color: #1A231F;
     }
 
     .progress-container {
@@ -226,7 +236,6 @@
       gap: 14px;
     }
 
-    /* Swipe Container Structures with solid opaque background to prevent card bleed-through */
     .shop-card-wrapper {
       position: relative;
       border-radius: 16px;
@@ -277,7 +286,7 @@
 
     .details-btn {
       display: inline-block;
-      margin-top: 4px;
+      margin-top: 6px;
       background: rgba(255, 255, 255, 0.2);
       color: white;
       text-decoration: none;
@@ -309,12 +318,15 @@
       opacity: 0.85;
     }
 
-    /* Expanded Checkbox Touch Target Area */
+    /* Entire left column click target wrapper */
     .checkbox-container {
       display: flex;
-      align-items: flex-start;
-      padding: 4px;
-      margin: -4px;
+      flex-direction: column;
+      align-items: center;
+      align-self: stretch; /* Stretches from top to the bottom of the card */
+      padding: 0 8px 0 0;
+      margin: -16px 0 -16px -16px; /* Extends padding edge-to-edge on the left */
+      padding-top: 16px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
@@ -330,6 +342,7 @@
       justify-content: center;
       background: var(--card-bg);
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .shop-card.completed .checkbox {
@@ -387,15 +400,6 @@
       color: var(--text-muted);
     }
 
-    .shop-location {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .recommendations {
       background: var(--sub-bg-soft);
       border-radius: 10px;
@@ -435,9 +439,9 @@
     
     <!-- Animated Pill Theme Toggle Button -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-      <span class="toggle-icon">☀️</span>
-      <span class="toggle-icon">🌙</span>
-      <div class="theme-toggle-thumb" id="themeThumb">🌙</div>
+      <span class="toggle-icon sun-icon">☀️</span>
+      <span class="toggle-icon moon-icon">🌙</span>
+      <div class="theme-toggle-thumb" id="themeThumb">☀️</div>
     </div>
 
     <div class="progress-container">
@@ -573,10 +577,10 @@
         drawer.className = 'details-drawer';
         drawer.innerHTML = `
           <div class="details-title">Business Info</div>
-          <div class="details-row"><strong>Hours:</strong> ${shop.hours || 'N/A'} 🕒</div>
-          <div class="details-row"><strong>Vibe:</strong> ${shop.vibe || 'N/A'} ✨</div>
-          <div class="details-row"><strong>Seating:</strong> ${shop.seating || 'N/A'} 🪑</div>
-          <a class="details-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open Map 📍</a>
+          <div class="details-row"><strong>Hours:</strong> ${shop.hours || 'N/A'}</div>
+          <div class="details-row"><strong>Vibe:</strong> ${shop.vibe || 'N/A'}</div>
+          <div class="details-row"><strong>Seating:</strong> ${shop.seating || 'N/A'}</div>
+          <a class="details-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open Map</a>
         `;
 
         const card = document.createElement('div');
