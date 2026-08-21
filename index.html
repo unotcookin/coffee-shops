@@ -22,6 +22,8 @@
       --completed-check: #2D5A43;
       --toggle-bg: rgba(0, 0, 0, 0.15);
       --toggle-thumb: #FFFFFF;
+      --filter-active-bg: #2A4739;
+      --filter-active-text: #FFFFFF;
     }
 
     [data-theme="dark"] {
@@ -41,6 +43,9 @@
       --completed-check: #406352;
       --toggle-bg: rgba(255, 255, 255, 0.2);
       --toggle-thumb: #1A231F;
+      /* High-contrast active state for dark mode */
+      --filter-active-bg: #D1E7DD;
+      --filter-active-text: #121815;
     }
 
     body {
@@ -195,10 +200,10 @@
     }
 
     .filter-btn.active {
-      background: var(--header-start);
-      color: white;
-      border-color: var(--header-start);
-      box-shadow: 0 3px 8px rgba(42, 71, 57, 0.25);
+      background: var(--filter-active-bg);
+      color: var(--filter-active-text);
+      border-color: var(--filter-active-bg);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
     }
 
     .sub-filter-bar {
