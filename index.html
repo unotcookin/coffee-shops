@@ -128,12 +128,13 @@
       line-height: 1;
     }
 
+    /* Custom colors for sun (selection/accent green) and moon (dark green) */
     .sun-icon {
       color: var(--accent-green);
     }
 
     .moon-icon {
-      color: var(--header-start);
+      color: var(--primary);
     }
 
     .progress-container {
@@ -318,7 +319,7 @@
       opacity: 0.85;
     }
 
-    /* Checkbox container shifted right and perfectly centered horizontally in its column */
+    /* Checkbox container shifted right and centered */
     .checkbox-container {
       display: flex;
       justify-content: center;
@@ -438,8 +439,8 @@
     
     <!-- Animated Pill Theme Toggle Button -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-      <span class="toggle-icon sun-icon">☀️</span>
-      <span class="toggle-icon moon-icon">🌙</span>
+      <span class="toggle-icon sun-icon" style="color: var(--accent-green);">☀️</span>
+      <span class="toggle-icon moon-icon" style="color: var(--primary);">🌙</span>
       <div class="theme-toggle-thumb" id="themeThumb">☀️</div>
     </div>
 
@@ -656,7 +657,6 @@
       });
 
       card.addEventListener('touchstart', (e) => {
-        // Enforce only one card open at a time globally
         if (activeCardController && activeCardController !== controller) {
           activeCardController.close();
         }
