@@ -128,7 +128,6 @@
       line-height: 1;
     }
 
-    /* Updated Sun (matches selection/accent green) and Moon (matches dark green) */
     .sun-icon {
       color: var(--accent-green);
     }
@@ -319,12 +318,13 @@
       opacity: 0.85;
     }
 
-    /* Fixed Checkbox container with large comfortable click target */
+    /* Checkbox container shifted right and perfectly centered horizontally in its column */
     .checkbox-container {
       display: flex;
+      justify-content: center;
       align-items: center;
       align-self: stretch;
-      padding: 0 12px 0 4px;
+      width: 56px;
       margin: -16px 0 -16px -16px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
