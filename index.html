@@ -174,11 +174,13 @@
       width: 100%;
       background: linear-gradient(135deg, var(--header-start) 0%, var(--header-end) 100%);
       color: white;
-      padding: 14px 16px;
+      padding: 14px 20px 14px 16px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: flex-end;
+      text-align: right;
       gap: 6px;
       z-index: 1;
       font-size: 12px;
@@ -195,8 +197,10 @@
     .details-row {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 6px;
       color: rgba(255, 255, 255, 0.9);
+      width: 100%;
     }
 
     .details-btn {
@@ -272,16 +276,6 @@
       min-width: 0;
     }
 
-    .shop-thumb {
-      width: 72px;
-      height: 72px;
-      border-radius: 12px;
-      object-fit: cover;
-      flex-shrink: 0;
-      background-color: var(--sub-bg-soft);
-      border: 1px solid var(--border);
-    }
-
     .shop-header-line {
       display: flex;
       justify-content: space-between;
@@ -354,7 +348,7 @@
       font-size: 10px;
       color: var(--text-muted);
       text-align: right;
-      margin-top: 4px;
+      margin-top: 6px;
       font-weight: 600;
       opacity: 0.7;
     }
@@ -363,7 +357,7 @@
 <body>
 
   <header>
-    <h1>☕ Naples Coffee Tour ☕</h1>
+    <h1>— Naples Coffee Tour —</h1>
     <p class="subtitle">Your relaxed guide to 30 local coffee spots</p>
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
@@ -386,37 +380,37 @@
 
   <script>
     const shops = [
-      { name: "Fit & Fuel Bicycle Cafe", zone: "Naples", area: "North Naples", loc: "819 Vanderbilt Beach Rd, Naples, FL 34108", drink: "Iced Vanilla Oat Latte / Espresso Macchiato", pair: "Breakfast burrito / protein smoothie bowls", hours: "7:00 AM – 3:00 PM", vibe: "Casual, cyclist-friendly, energetic", seating: "Indoor & Outdoor patio", img: "https://www.naplesillustrated.com/wp-content/uploads/sites/82/2019/12/FFView2.jpg" },
-      { name: "Acopio Coffee", zone: "Naples", area: "Midtown", loc: "5100 Tamiami Trl N Ste 101, Naples, FL 34103", drink: "Colombian Specialty Pour-Over / Iced Dirty Chai", pair: "Sugar-free donuts / Colombian pandebono", hours: "7:30 AM – 4:00 PM", vibe: "Modern, Colombian specialty, minimalist", seating: "Indoor bar & café tables", img: "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=3235806726561715" },
-      { name: "Epiphany Bakery & Coffee", zone: "Naples", area: "North Naples", loc: "1514 Immokalee Rd #117, Naples, FL 34110", drink: "Cortado / Golden Milk Turmeric Latte", pair: "100% GF cinnamon rolls / galettes", hours: "8:00 AM – 2:00 PM", vibe: "Cozy gluten-free bakery hub", seating: "Limited indoor seating", img: "https://epiphanyglutenfree.com/wp-content/uploads/2026/07/Tres-Leche-Individual-scaled.jpg" },
-      { name: "Narrative Coffee Roasters", zone: "Naples", area: "North Naples", loc: "9106 Strada Pl, Naples, FL 34108", drink: "Draft Nitro Cold Brew / Honey Lavender Latte", pair: "House-baked cardamom buns / avocado toast", hours: "7:00 AM – 6:00 PM", vibe: "Artisanal roast house, chic", seating: "Indoor lounge & outdoor patio", img: "" },
-      { name: "Three Sixteen Cafe", zone: "Naples", area: "North Naples", loc: "13500 Tamiami Trl N #1, Naples, FL 34110", drink: "House Chai Latte / Vanilla Bean Flat White", pair: "Toasted bagels / egg breakfast sandwiches", hours: "7:00 AM – 3:00 PM", vibe: "Warm neighborhood community cafe", seating: "Indoor booths & tables", img: "" },
-      { name: "Heirloom Café & Tea House", zone: "Naples", area: "Midtown", loc: "4947 Tamiami Trl N #104, Naples, FL 34103", drink: "Iced Chai Tea Latte / Rose Water Latte", pair: "Scones with clotted cream / tea sandwiches", hours: "8:00 AM – 4:00 PM", vibe: "Charming, English tea house aesthetic", seating: "Indoor parlor & covered outdoor", img: "" },
-      { name: "Crème de la Crème", zone: "Naples", area: "Midtown", loc: "4339 Tamiami Trl N, Naples, FL 34103", drink: "Illy Espresso / Iced Vanilla Caramel Latte", pair: "Sweet crepes / fruit tarts / croissants", hours: "8:00 AM – 5:00 PM", vibe: "French bistro, elegant & sweet", seating: "Indoor bistro dining", img: "" },
-      { name: "Winfield Street Coffee", zone: "Naples", area: "Downtown", loc: "1250 Tamiami Trl N #111, Naples, FL 34102", drink: "Peanut Butter Mocha / Nitro Cold Brew", pair: "Breakfast egg & cheese rolls / empanadas", hours: "7:00 AM – 4:00 PM", vibe: "Trendy, fast-casual art cafe", seating: "Indoor seating & street patio", img: "" },
-      { name: "Wolfmoon", zone: "Naples", area: "East Naples", loc: "Commercial Dr, Naples, FL 34104", drink: "Spanish Latte / Iced Matcha Espresso Fusion", pair: "Alpha Butter Croissant / Dulce de Leche pastry", hours: "7:30 AM – 2:00 PM", vibe: "Boutique artisanal bakery secret", seating: "Outdoor courtyard", img: "" },
-      { name: "Sunburst Cafe", zone: "Naples", area: "Central Naples", loc: "Pine Ridge Rd, Naples, FL 34109", drink: "Costa Rican Pour Over / Sunburst Mocha", pair: "Scratch-made muffins / breakfast scrambles", hours: "7:00 AM – 2:30 PM", vibe: "Sunny, classic Costa Rican style", seating: "Spacious indoor & outdoor terrace", img: "" },
-      { name: "Grain de Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Café au Lait / Espresso Double Shot", pair: "Authentic Parisian almond croissants", hours: "7:30 AM – 3:00 PM", vibe: "Authentic French patisserie", seating: "Sidewalk café tables", img: "" },
-      { name: "Cafe Nat", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "House Specialty Iced Latte / Iced Americano", pair: "Breakfast quiche / morning pastries", hours: "7:00 AM – 3:00 PM", vibe: "Relaxed local gathering space", seating: "Indoor tables", img: "" },
-      { name: "Porsche Studio Naples Café", zone: "Naples", area: "Downtown", loc: "625 5th Ave S, Naples, FL 34102", drink: "Barista Craft Espresso / Nitro Cold Brew", pair: "Gourmet biscotti / light pastries", hours: "10:00 AM – 6:00 PM", vibe: "Ultra-sleek luxury studio", seating: "Modern lounge", img: "" },
-      { name: "Bontà Bakery", zone: "Naples", area: "Downtown", loc: "824 5th Ave S, Naples, FL 34102", drink: "Authentic Italian Cappuccino / Iced Flat White", pair: "Pistachio-filled croissant / bomboloni", hours: "7:30 AM – 6:00 PM", vibe: "Italian bakery & espresso bar", seating: "Indoor café & outdoor streetfront", img: "" },
-      { name: "GLDN Hour Coffee Co", zone: "Naples", area: "Downtown", loc: "900 6th Ave S, Naples, FL 34102", drink: "Guava Mama Matcha / Miso Caramel Latte", pair: "Artisanal toast / craft breakfast pastries", hours: "7:00 AM – 3:00 PM", vibe: "Boho chic, vibrant coastal modern", seating: "Indoor bar & sunlit patio", img: "" },
-      { name: "Sendo de Café", zone: "Naples", area: "Downtown", loc: "534 Park St, Naples, FL 34102", drink: "Single-Origin Espresso / Specialty Latte", pair: "Local baked treats", hours: "7:30 AM – 2:00 PM", vibe: "Intimate downtown hidden gem", seating: "Outdoor courtyard", img: "" },
-      { name: "Bean to Cup Coffee Lounge", zone: "Naples", area: "Bayshore Arts", loc: "3570 Bayshore Dr, Naples, FL 34112", drink: "Craft Cold Brew / Vanilla Bean Latte", pair: "Bagels / morning breakfast wraps", hours: "7:00 AM – 4:00 PM", vibe: "Artistic, cozy lounge space", seating: "Sofas & outdoor garden", img: "" },
-      { name: "The Brick Coffee & Bar", zone: "Naples", area: "Downtown", loc: "5th Ave S, Naples, FL 34102", drink: "Iced Caramel Macchiato / Espresso Tonic", pair: "Flatbreads / paninis / acai bowls", hours: "7:30 AM – 9:00 PM", vibe: "Rustic brick design, bustling", seating: "Indoor & 5th Ave promenade", img: "" },
-      { name: "Divine Naples Coffee & Wine", zone: "Naples", area: "Downtown", loc: "4th Ave S, Naples, FL 34102", drink: "Traditional Italian Cappuccino / Affogato", pair: "Artisanal gelato / cannoli", hours: "8:00 AM – 8:00 PM", vibe: "Warm European cafe & wine nook", seating: "Cozy indoor & sidewalk", img: "" },
-      { name: "Rumba Cuban Cafe", zone: "Naples", area: "East Naples", loc: "Airport-Pulling Rd, Naples, FL 34104", drink: "Café con Leche / Cuban Colada", pair: "Pan Cubano / Pastelito de Guayaba", hours: "7:00 AM – 3:00 PM", vibe: "Authentic Cuban coffee counter", seating: "Indoor diner seating", img: "" },
-      { name: "Santa Fe Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Colombian Drip / Iced Dulce de Leche Latte", pair: "Homemade Colombian empanadas", hours: "7:30 AM – 3:30 PM", vibe: "Friendly South American cafe", seating: "Casual indoor seating", img: "" },
-      { name: "Wake Up Marco", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Trooper Latte / Wake Up Mocha", pair: "Breakfast sandwiches / cinnamon rolls", hours: "6:30 AM – 2:00 PM", vibe: "Island vibe, quick morning spot", seating: "Outdoor covered porch", img: "" },
-      { name: "MICRo", zone: "Marco Island", area: "Central Marco", loc: "Bald Eagle Dr, Marco Island, FL 34145", drink: "Single-Origin Pour Over / Micro-Batch Cold Brew", pair: "Artisanal croissants / energy bites", hours: "7:00 AM – 2:00 PM", vibe: "Micro-roastery, coffee purist spot", seating: "Minimalist indoor & outdoor", img: "" },
-      { name: "Ori's Bakery & Café", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Roasted Iced Latte / Cappuccino", pair: "Fresh-baked South American pastries", hours: "7:00 AM – 3:00 PM", vibe: "Family-run island bakery", seating: "Indoor dining tables", img: "" },
-      { name: "Cafe Marquise", zone: "Marco Island", area: "Central Marco", loc: "Marco Island, FL 34145", drink: "European Espresso / Iced Matcha Latte", pair: "French macarons / fruit pastries", hours: "8:00 AM – 2:00 PM", vibe: "Chic French pastry parlour", seating: "Boutique indoor seating", img: "" },
-      { name: "Yim Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Cart, Naples, FL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods", hours: "Varies by schedule / event", vibe: "Trendy mobile specialty cart", seating: "Standing / event seating", img: "" },
-      { name: "Awaken Apothecary Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Bar, Naples, FL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks", hours: "Varies by schedule / event", vibe: "Holistic wellness pop-up", seating: "Event outdoor space", img: "" },
-      { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, Naples, FL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces", img: "" },
-      { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, Naples, FL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating", img: "" },
-      { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, Naples, FL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area", img: "" },
-      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating", img: "" }
+      { name: "Fit & Fuel Bicycle Cafe", zone: "Naples", area: "North Naples", loc: "819 Vanderbilt Beach Rd, Naples, FL 34108", drink: "Iced Vanilla Oat Latte / Espresso Macchiato", pair: "Breakfast burrito / protein smoothie bowls", hours: "7:00 AM – 3:00 PM", vibe: "Casual, cyclist-friendly, energetic", seating: "Indoor & Outdoor patio" },
+      { name: "Acopio Coffee", zone: "Naples", area: "Midtown", loc: "5100 Tamiami Trl N Ste 101, Naples, FL 34103", drink: "Colombian Specialty Pour-Over / Iced Dirty Chai", pair: "Sugar-free donuts / Colombian pandebono", hours: "7:30 AM – 4:00 PM", vibe: "Modern, Colombian specialty, minimalist", seating: "Indoor bar & café tables" },
+      { name: "Epiphany Bakery & Coffee", zone: "Naples", area: "North Naples", loc: "1514 Immokalee Rd #117, Naples, FL 34110", drink: "Cortado / Golden Milk Turmeric Latte", pair: "100% GF cinnamon rolls / galettes", hours: "8:00 AM – 2:00 PM", vibe: "Cozy gluten-free bakery hub", seating: "Limited indoor seating" },
+      { name: "Narrative Coffee Roasters", zone: "Naples", area: "North Naples", loc: "9106 Strada Pl, Naples, FL 34108", drink: "Draft Nitro Cold Brew / Honey Lavender Latte", pair: "House-baked cardamom buns / avocado toast", hours: "7:00 AM – 6:00 PM", vibe: "Artisanal roast house, chic", seating: "Indoor lounge & outdoor patio" },
+      { name: "Three Sixteen Cafe", zone: "Naples", area: "North Naples", loc: "13500 Tamiami Trl N #1, Naples, FL 34110", drink: "House Chai Latte / Vanilla Bean Flat White", pair: "Toasted bagels / egg breakfast sandwiches", hours: "7:00 AM – 3:00 PM", vibe: "Warm neighborhood community cafe", seating: "Indoor booths & tables" },
+      { name: "Heirloom Café & Tea House", zone: "Naples", area: "Midtown", loc: "4947 Tamiami Trl N #104, Naples, FL 34103", drink: "Iced Chai Tea Latte / Rose Water Latte", pair: "Scones with clotted cream / tea sandwiches", hours: "8:00 AM – 4:00 PM", vibe: "Charming, English tea house aesthetic", seating: "Indoor parlor & covered outdoor" },
+      { name: "Crème de la Crème", zone: "Naples", area: "Midtown", loc: "4339 Tamiami Trl N, Naples, FL 34103", drink: "Illy Espresso / Iced Vanilla Caramel Latte", pair: "Sweet crepes / fruit tarts / croissants", hours: "8:00 AM – 5:00 PM", vibe: "French bistro, elegant & sweet", seating: "Indoor bistro dining" },
+      { name: "Winfield Street Coffee", zone: "Naples", area: "Downtown", loc: "1250 Tamiami Trl N #111, Naples, FL 34102", drink: "Peanut Butter Mocha / Nitro Cold Brew", pair: "Breakfast egg & cheese rolls / empanadas", hours: "7:00 AM – 4:00 PM", vibe: "Trendy, fast-casual art cafe", seating: "Indoor seating & street patio" },
+      { name: "Wolfmoon", zone: "Naples", area: "East Naples", loc: "Commercial Dr, Naples, FL 34104", drink: "Spanish Latte / Iced Matcha Espresso Fusion", pair: "Alpha Butter Croissant / Dulce de Leche pastry", hours: "7:30 AM – 2:00 PM", vibe: "Boutique artisanal bakery secret", seating: "Outdoor courtyard" },
+      { name: "Sunburst Cafe", zone: "Naples", area: "Central Naples", loc: "Pine Ridge Rd, Naples, FL 34109", drink: "Costa Rican Pour Over / Sunburst Mocha", pair: "Scratch-made muffins / breakfast scrambles", hours: "7:00 AM – 2:30 PM", vibe: "Sunny, classic Costa Rican style", seating: "Spacious indoor & outdoor terrace" },
+      { name: "Grain de Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Café au Lait / Espresso Double Shot", pair: "Authentic Parisian almond croissants", hours: "7:30 AM – 3:00 PM", vibe: "Authentic French patisserie", seating: "Sidewalk café tables" },
+      { name: "Cafe Nat", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "House Specialty Iced Latte / Iced Americano", pair: "Breakfast quiche / morning pastries", hours: "7:00 AM – 3:00 PM", vibe: "Relaxed local gathering space", seating: "Indoor tables" },
+      { name: "Porsche Studio Naples Café", zone: "Naples", area: "Downtown", loc: "625 5th Ave S, Naples, FL 34102", drink: "Barista Craft Espresso / Nitro Cold Brew", pair: "Gourmet biscotti / light pastries", hours: "10:00 AM – 6:00 PM", vibe: "Ultra-sleek luxury studio", seating: "Modern lounge" },
+      { name: "Bontà Bakery", zone: "Naples", area: "Downtown", loc: "824 5th Ave S, Naples, FL 34102", drink: "Authentic Italian Cappuccino / Iced Flat White", pair: "Pistachio-filled croissant / bomboloni", hours: "7:30 AM – 6:00 PM", vibe: "Italian bakery & espresso bar", seating: "Indoor café & outdoor streetfront" },
+      { name: "GLDN Hour Coffee Co", zone: "Naples", area: "Downtown", loc: "900 6th Ave S, Naples, FL 34102", drink: "Guava Mama Matcha / Miso Caramel Latte", pair: "Artisanal toast / craft breakfast pastries", hours: "7:00 AM – 3:00 PM", vibe: "Boho chic, vibrant coastal modern", seating: "Indoor bar & sunlit patio" },
+      { name: "Sendo de Café", zone: "Naples", area: "Downtown", loc: "534 Park St, Naples, FL 34102", drink: "Single-Origin Espresso / Specialty Latte", pair: "Local baked treats", hours: "7:30 AM – 2:00 PM", vibe: "Intimate downtown hidden gem", seating: "Outdoor courtyard" },
+      { name: "Bean to Cup Coffee Lounge", zone: "Naples", area: "Bayshore Arts", loc: "3570 Bayshore Dr, Naples, FL 34112", drink: "Craft Cold Brew / Vanilla Bean Latte", pair: "Bagels / morning breakfast wraps", hours: "7:00 AM – 4:00 PM", vibe: "Artistic, cozy lounge space", seating: "Sofas & outdoor garden" },
+      { name: "The Brick Coffee & Bar", zone: "Naples", area: "Downtown", loc: "5th Ave S, Naples, FL 34102", drink: "Iced Caramel Macchiato / Espresso Tonic", pair: "Flatbreads / paninis / acai bowls", hours: "7:30 AM – 9:00 PM", vibe: "Rustic brick design, bustling", seating: "Indoor & 5th Ave promenade" },
+      { name: "Divine Naples Coffee & Wine", zone: "Naples", area: "Downtown", loc: "4th Ave S, Naples, FL 34102", drink: "Traditional Italian Cappuccino / Affogato", pair: "Artisanal gelato / cannoli", hours: "8:00 AM – 8:00 PM", vibe: "Warm European cafe & wine nook", seating: "Cozy indoor & sidewalk" },
+      { name: "Rumba Cuban Cafe", zone: "Naples", area: "East Naples", loc: "Airport-Pulling Rd, Naples, FL 34104", drink: "Café con Leche / Cuban Colada", pair: "Pan Cubano / Pastelito de Guayaba", hours: "7:00 AM – 3:00 PM", vibe: "Authentic Cuban coffee counter", seating: "Indoor diner seating" },
+      { name: "Santa Fe Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Colombian Drip / Iced Dulce de Leche Latte", pair: "Homemade Colombian empanadas", hours: "7:30 AM – 3:30 PM", vibe: "Friendly South American cafe", seating: "Casual indoor seating" },
+      { name: "Wake Up Marco", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Trooper Latte / Wake Up Mocha", pair: "Breakfast sandwiches / cinnamon rolls", hours: "6:30 AM – 2:00 PM", vibe: "Island vibe, quick morning spot", seating: "Outdoor covered porch" },
+      { name: "MICRo", zone: "Marco Island", area: "Central Marco", loc: "Bald Eagle Dr, Marco Island, FL 34145", drink: "Single-Origin Pour Over / Micro-Batch Cold Brew", pair: "Artisanal croissants / energy bites", hours: "7:00 AM – 2:00 PM", vibe: "Micro-roastery, coffee purist spot", seating: "Minimalist indoor & outdoor" },
+      { name: "Ori's Bakery & Café", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Roasted Iced Latte / Cappuccino", pair: "Fresh-baked South American pastries", hours: "7:00 AM – 3:00 PM", vibe: "Family-run island bakery", seating: "Indoor dining tables" },
+      { name: "Cafe Marquise", zone: "Marco Island", area: "Central Marco", loc: "Marco Island, FL 34145", drink: "European Espresso / Iced Matcha Latte", pair: "French macarons / fruit pastries", hours: "8:00 AM – 2:00 PM", vibe: "Chic French pastry parlour", seating: "Boutique indoor seating" },
+      { name: "Yim Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Cart, Naples, FL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods", hours: "Varies by schedule / event", vibe: "Trendy mobile specialty cart", seating: "Standing / event seating" },
+      { name: "Awaken Apothecary Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Bar, Naples, FL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks", hours: "Varies by schedule / event", vibe: "Holistic wellness pop-up", seating: "Event outdoor space" },
+      { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, Naples, FL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces" },
+      { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, Naples, FL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating" },
+      { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, Naples, FL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area" },
+      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" }
     ];
 
     let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
@@ -468,14 +462,14 @@
 
         const appleMapUrl = `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
 
-        // Drawer containing exposed details
+        // Drawer containing exposed details (Right-Aligned)
         const drawer = document.createElement('div');
         drawer.className = 'details-drawer';
         drawer.innerHTML = `
           <div class="details-title">Business Info</div>
-          <div class="details-row">🕒 <strong>Hours:</strong> ${shop.hours || 'N/A'}</div>
-          <div class="details-row">✨ <strong>Vibe:</strong> ${shop.vibe || 'N/A'}</div>
-          <div class="details-row">🪑 <strong>Seating:</strong> ${shop.seating || 'N/A'}</div>
+          <div class="details-row"><strong>Hours:</strong> ${shop.hours || 'N/A'} 🕒</div>
+          <div class="details-row"><strong>Vibe:</strong> ${shop.vibe || 'N/A'} ✨</div>
+          <div class="details-row"><strong>Seating:</strong> ${shop.seating || 'N/A'} 🪑</div>
           <a class="details-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open Map 📍</a>
         `;
 
@@ -517,15 +511,6 @@
         card.appendChild(checkbox);
         card.appendChild(info);
 
-        if (shop.img) {
-          const img = document.createElement('img');
-          img.className = 'shop-thumb';
-          img.src = shop.img;
-          img.alt = shop.name;
-          img.loading = 'lazy';
-          card.appendChild(img);
-        }
-
         wrapper.appendChild(drawer);
         wrapper.appendChild(card);
 
@@ -544,7 +529,6 @@
       let isSwiping = false;
       let isOpen = false;
 
-      // Close drawer if user taps directly on drawer
       drawer.addEventListener('click', () => {
         card.style.transform = 'translateX(0px)';
         isOpen = false;
@@ -562,10 +546,9 @@
         let diffX = currentX - startX;
 
         if (isOpen) {
-          diffX -= 220; // Maintain open offset
+          diffX -= 220;
         }
 
-        // Limit drag range
         if (diffX < -240) diffX = -240;
         if (diffX > 0) diffX = 0;
 
@@ -579,7 +562,6 @@
 
         const diffX = currentX - startX;
 
-        // Open if swiped left far enough, else close
         if (!isOpen && diffX < -60) {
           card.style.transform = 'translateX(-220px)';
           isOpen = true;
