@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collier County Coffee Tour</title>
+  <style>
+    :root {
+      --bg: #f8f6f0;
+      --card: #ffffff;
+      --accent: #6f4e37;
+      --accent-light: #e8ded2;
+      --text: #2c2523;
+      --text-muted: #7a6e67;
+      --border: #e2dad1;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1 { font-size: 1.5rem; text-align: center; margin-bottom: 4px; color: var(--accent); }
+    p.subtitle { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 0; margin-bottom: 16px; }
+    
+    .progress-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    .progress-bar-bg {
+      background: var(--border);
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar-fill {
+      background: var(--accent);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    input[type="text"] {
+      flex: 1; min-width: 200px; padding: 10px; border-radius: 8px;
+      border: 1px solid var(--border); font-size: 0.9rem; outline: none;
+    }
+    .filter-btn {
+      padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer; font-size: 0.85rem;
+    }
+    .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+    
+    .shop-card {
+      background: var(--card); border-radius: 10px; padding: 12px 16px;
+      margin-bottom: 10px; border: 1px solid var(--border); display: flex;
+      align-items: flex-start; gap: 12px; cursor: pointer; transition: transform 0.1s;
+    }
+    .shop-card:active { transform: scale(0.99); }
+    .shop-card input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); margin-top: 3px; cursor: pointer; }
+    .shop-info { flex: 1; }
+    .shop-name { font-weight: 600; font-size: 1rem; margin-bottom: 2px; }
+    .shop-location { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+    .shop-drink { font-size: 0.85rem; color: var(--accent); }
+    .shop-card.visited { opacity: 0.6; background: #f1ede6; }
+    .shop-card.visited .shop-name { text-decoration: line-through; }
+  </style>
+</head>
+<body>
+
+  <h1>☕ Collier Coffee Tour</h1>
+  <p class="subtitle">30 Independent Coffee Spots in Naples & Marco Island</p>
+
+  <div class="progress-card">
+    <div style="display:flex; justify-content:space-between; font-weight:600; font-size:0.9rem;">
+      <span>Your Progress</span>
+      <span id="progress-text">0 of 30 Visited (0%)</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search shops or drinks..." oninput="filterShops()">
+    <button class="filter-btn active" onclick="setFilter('All', this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Naples', this)">Naples</button>
+    <button class="filter-btn" onclick="setFilter('Marco Island', this)">Marco Island</button>
+    <button class="filter-btn" onclick="setFilter('Mobile', this)">Mobile</button>
+  </div>
+
+  <div id="shop-list"></div>
+
+  <script>
+    const shops = [
+      { name: "Narrative Coffee Roasters", zone: "Naples", loc: "Mercato & Central Naples", drink: "Draft Nitro Cold Brew" },
+      { name: "Fit & Fuel Bicycle Cafe", zone: "Naples", loc: "Vanderbilt Beach Rd", drink: "Iced Vanilla Oat Latte" },
+      { name: "Epiphany Bakery & Coffee", zone: "Naples", loc: "Immokalee Rd", drink: "Cortado" },
+      { name: "Three Sixteen Cafe", zone: "Naples", loc: "Wiggins Pass Rd", drink: "House Chai Latte" },
+      { name: "Acopio Coffee", zone: "Naples", loc: "5100 Tamiami Trail N", drink: "Colombian Specialty Pour-Over" },
+      { name: "Heirloom Café & Tea House", zone: "Naples", loc: "Naples", drink: "Iced Chai Latte" },
+      { name: "Crème de la Crème", zone: "Naples", loc: "4339 Tamiami Trail N", drink: "Illy Espresso / Cappuccino" },
+      { name: "Winfield Street Coffee", zone: "Naples", loc: "1250 Tamiami Trail N", drink: "Peanut Butter Mocha" },
+      { name: "Wolfmoon", zone: "Naples", loc: "Garden Cafe / Tamiami Trail N", drink: "Spanish Latte" },
+      { name: "Sunburst Cafe", zone: "Naples", loc: "Pine Ridge Rd", drink: "Costa Rican Micro-Lot Pour Over" },
+      { name: "Grain de Cafe", zone: "Naples", loc: "Tamiami Trail N", drink: "Café au Lait" },
+      { name: "Cafe Nat", zone: "Naples", loc: "Naples", drink: "Iced Specialty Latte" },
+      { name: "Porsche Studio Naples Café", zone: "Naples", loc: "625 5th Ave S", drink: "Barista Specialty Espresso" },
+      { name: "Bontà Bakery", zone: "Naples", loc: "824 5th Ave S", drink: "Authentic Italian Cappuccino" },
+      { name: "GLDN Hour Coffee Co", zone: "Naples", loc: "900 6th Ave S", drink: "Guava Mama" },
+      { name: "Sendo de Café", zone: "Naples", loc: "534 Park St", drink: "Espresso / Specialty Latte" },
+      { name: "Bean to Cup Coffee Lounge", zone: "Naples", loc: "3570 Bayshore Dr", drink: "Craft Cold Brew" },
+      { name: "The Brick Coffee & Bar", zone: "Naples", loc: "5th Ave S", drink: "Iced Caramel Macchiato" },
+      { name: "Divine Naples Coffee & Wine", zone: "Naples", loc: "4th Ave S", drink: "Traditional Italian Cappuccino" },
+      { name: "Rumba Cuban Cafe", zone: "Naples", loc: "Airport-Pulling Rd", drink: "Café con Leche" },
+      { name: "Santa Fe Cafe", zone: "Naples", loc: "Tamiami Trail N", drink: "Iced Dulce de Leche Latte" },
+      { name: "Wake Up Marco", zone: "Marco Island", loc: "N Collier Blvd", drink: "Italian Trooper" },
+      { name: "MICRo", zone: "Marco Island", loc: "Bald Eagle Dr", drink: "Single-Origin Pour Over" },
+      { name: "Ori's Bakery & Café", zone: "Marco Island", loc: "N Collier Blvd", drink: "Italian Roasted Iced Latte" },
+      { name: "Cafe Marquise", zone: "Marco Island", loc: "Marco Island", drink: "European-style Espresso" },
+      { name: "Yim Coffee", zone: "Mobile", loc: "Pop-up Cart", drink: "Signature Iced Coffee" },
+      { name: "Awaken Apothecary Coffee", zone: "Mobile", loc: "Mobile Bar/Cart", drink: "Iced Banana Bread Latte" },
+      { name: "The Bean Trolley", zone: "Mobile", loc: "Pop-ups", drink: "Honey Cinnamon Cold Brew" },
+      { name: "Four Roots Coffee", zone: "Mobile", loc: "Mobile Espresso Cart", drink: "Draft Oat Milk Latte" },
+      { name: "Countries Coffee Trailer", zone: "Mobile", loc: "Naples Trailer", drink: "Latino Specialty Mocha" },
+      { name: "Drip Coffee Bar", zone: "Mobile", loc: "SWFL Mobile Cart", drink: "Nitro Cold Brew on Tap" }
+    ];
+
+    let currentFilter = 'All';
+    let visited = JSON.parse(localStorage.getItem('collier_coffee_visited') || '{}');
+
+    function renderShops() {
+      const listEl = document.getElementById('shop-list');
+      const searchVal = document.getElementById('search').value.toLowerCase();
+      listEl.innerHTML = '';
+
+      let totalCount = 0;
+      let visitedCount = 0;
+
+      shops.forEach((shop, index) => {
+        const isVisited = !!visited[index];
+        const matchesFilter = currentFilter === 'All' || shop.zone === currentFilter;
+        const matchesSearch = shop.name.toLowerCase().includes(searchVal) || 
+                              shop.loc.toLowerCase().includes(searchVal) || 
+                              shop.drink.toLowerCase().includes(searchVal);
+
+        if (matchesFilter && matchesSearch) {
+          totalCount++;
+          if (isVisited) visitedCount++;
+
+          const card = document.createElement('div');
+          card.className = `shop-card ${isVisited ? 'visited' : ''}`;
+          card.onclick = (e) => {
+            if (e.target.tagName !== 'INPUT') {
+              toggleShop(index);
+            }
+          };
+
+          card.innerHTML = `
+            <input type="checkbox" ${isVisited ? 'checked' : ''} onchange="toggleShop(${index})">
+            <div class="shop-info">
+              <div class="shop-name">${shop.name}</div>
+              <div class="shop-location">${shop.loc}</div>
+              <div class="shop-drink">☕ Rec: ${shop.drink}</div>
+            </div>
+          `;
+          listEl.appendChild(card);
+        }
+      });
+
+      updateProgress();
+    }
+
+    function toggleShop(index) {
+      visited[index] = !visited[index];
+      localStorage.setItem('collier_coffee_visited', JSON.stringify(visited));
+      renderShops();
+    }
+
+    function updateProgress() {
+      const total = shops.length;
+      const count = Object.values(visited).filter(Boolean).length;
+      const pct = Math.round((count / total) * 100);
+      document.getElementById('progress-text').innerText = `${count} of ${total} Visited (${pct}%)`;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+    }
+
+    function setFilter(zone, btn) {
+      currentFilter = zone;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderShops();
+    }
+
+    function filterShops() {
+      renderShops();
+    }
+
+    renderShops();
+  </script>
+</body>
+</html>
