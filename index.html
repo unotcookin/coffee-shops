@@ -232,28 +232,28 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      background: var(--card-bg);
+      background: var(--card-bg); /* Prevents background bleed-through */
       box-shadow: 0 4px 10px rgba(0,0,0,0.02);
       border: 1.5px solid var(--border);
       transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* Details Drawer positioned on the right */
+    /* Details Drawer positioned on the right, hidden underneath */
     .details-drawer {
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 0;
+      right: 0;
       width: 100%;
       background: linear-gradient(135deg, var(--header-start) 0%, var(--header-end) 100%);
       color: white;
-      padding: 12px 16px 12px 24px;
+      padding: 12px 24px 12px 16px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
-      text-align: left;
+      align-items: flex-end;
+      text-align: right;
       gap: 4px;
       z-index: 1;
       font-size: 12px;
@@ -270,7 +270,7 @@
     .details-row {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: flex-end;
       gap: 6px;
       color: rgba(255, 255, 255, 0.95);
       width: 100%;
@@ -294,7 +294,7 @@
     .shop-card {
       position: relative;
       z-index: 2;
-      background: var(--card-bg);
+      background: var(--card-bg); /* Opaque background prevents seeing through the moving card */
       border-radius: 14px;
       padding: 16px;
       display: flex;
@@ -415,7 +415,7 @@
     .swipe-hint {
       font-size: 10px;
       color: var(--text-muted);
-      text-align: left;
+      text-align: right;
       margin-top: 6px;
       font-weight: 600;
       opacity: 0.7;
@@ -494,7 +494,7 @@
     let currentSubFilter = 'All Areas';
     let activeCardController = null;
 
-    const OPEN_OFFSET = 270; // Positive offset to slide card right, revealing right-side drawer
+    const OPEN_OFFSET = -270; // Negative offset to slide card left, revealing right-side drawer
 
     // Theme Initialization
     function initTheme() {
@@ -607,7 +607,7 @@
 
         const hint = document.createElement('div');
         hint.className = 'swipe-hint';
-        hint.innerText = 'Swipe left for info ›';
+        hint.innerText = '‹ Swipe left for info';
 
         info.appendChild(recs);
         info.appendChild(hint);
@@ -666,9 +666,8 @@
           diffX += OPEN_OFFSET;
         }
 
-        // Swiping left moves card to the right to reveal right-side drawer
-        if (diffX > OPEN_OFFSET + 20) diffX = OPEN_OFFSET + 20;
-        if (diffX < 0) diffX = 0;
+        if (diffX < OPEN_OFFSET - 20) diffX = OPEN_OFFSET - 20;
+        if (diffX > 0) diffX = 0;
 
         card.style.transform = `translateX(${diffX}px)`;
       }, { passive: true });
