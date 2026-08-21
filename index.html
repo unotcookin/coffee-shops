@@ -22,6 +22,8 @@
       --completed-check: #2D5A43;
       --toggle-bg: rgba(0, 0, 0, 0.15);
       --toggle-thumb: #FFFFFF;
+      --icon-inactive: #6B7C73;       /* Inactive icon color */
+      --icon-active: #1C3127;         /* Active icon color */
     }
 
     [data-theme="dark"] {
@@ -40,7 +42,9 @@
       --completed-border: #25362C;
       --completed-check: #406352;
       --toggle-bg: rgba(255, 255, 255, 0.2);
-      --toggle-thumb: #E2ECE6;
+      --toggle-thumb: #1A231F;
+      --icon-inactive: #94A89D;
+      --icon-active: #D1E7DD;
     }
 
     body {
@@ -86,9 +90,9 @@
     .theme-toggle-pill {
       background: var(--toggle-bg);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      width: 64px;
-      height: 32px;
-      border-radius: 32px;
+      width: 68px;
+      height: 34px;
+      border-radius: 34px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -105,8 +109,8 @@
     .theme-toggle-thumb {
       position: absolute;
       left: 4px;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       background: var(--toggle-thumb);
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -114,18 +118,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
     }
 
     [data-theme="dark"] .theme-toggle-thumb {
-      transform: translateX(32px);
+      transform: translateX(34px);
     }
 
     .toggle-icon {
-      font-size: 13px;
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.7);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
       z-index: 1;
       user-select: none;
-      line-height: 1;
+      transition: stroke 0.3s ease;
+    }
+
+    /* Style the thumb icon depending on active theme */
+    .theme-toggle-thumb .toggle-icon {
+      stroke: var(--primary);
+      width: 14px;
+      height: 14px;
     }
 
     .progress-container {
@@ -232,7 +248,7 @@
       position: relative;
       border-radius: 16px;
       overflow: hidden;
-      background: var(--card-bg); /* Prevents background bleed-through */
+      background: var(--card-bg);
       box-shadow: 0 4px 10px rgba(0,0,0,0.02);
       border: 1.5px solid var(--border);
       transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -294,9 +310,9 @@
     .shop-card {
       position: relative;
       z-index: 2;
-      background: var(--card-bg); /* Opaque background prevents seeing through the moving card */
+      background: var(--card-bg);
       border-radius: 14px;
-      padding: 16px;
+      padding: 16px 85px 16px 16px;
       display: flex;
       align-items: flex-start;
       gap: 14px;
@@ -304,6 +320,7 @@
       touch-action: pan-y;
       box-sizing: border-box;
       border: none;
+      overflow: hidden;
     }
 
     .shop-card.completed {
@@ -356,6 +373,7 @@
     .shop-info {
       flex-grow: 1;
       min-width: 0;
+      overflow: hidden;
     }
 
     .shop-header-line {
@@ -371,6 +389,9 @@
       font-size: 16px;
       color: var(--primary);
       line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .area-badge {
@@ -397,10 +418,13 @@
       padding: 8px 10px;
       font-size: 11px;
       line-height: 1.4;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .rec-item {
       margin-bottom: 2px;
+      overflow-x: hidden;
     }
 
     .rec-item:last-child {
@@ -428,11 +452,40 @@
     <h1>— Naples Coffee Tour —</h1>
     <p class="subtitle">Your relaxed guide to 30 local coffee spots</p>
     
-    <!-- Animated Pill Theme Toggle Button -->
+    <!-- Animated Pill Theme Toggle Button with SVGs -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-      <span class="toggle-icon sun-icon" style="color: var(--accent-green);">☀️</span>
-      <span class="toggle-icon moon-icon" style="color: var(--primary);">🌙</span>
-      <div class="theme-toggle-thumb" id="themeThumb">☀️</div>
+      <!-- Sun SVG Icon -->
+      <svg class="toggle-icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+
+      <!-- Moon SVG Icon -->
+      <svg class="toggle-icon" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+
+      <!-- Sliding Thumb with dynamic icon inside -->
+      <div class="theme-toggle-thumb" id="themeThumb">
+        <svg class="toggle-icon" viewBox="0 0 24 24" id="thumbIcon">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </div>
     </div>
 
     <div class="progress-container">
@@ -494,7 +547,10 @@
     let currentSubFilter = 'All Areas';
     let activeCardController = null;
 
-    const OPEN_OFFSET = -270; // Negative offset to slide card left, revealing right-side drawer
+    const OPEN_OFFSET = -270; 
+
+    const sunSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
 
     // Theme Initialization
     function initTheme() {
@@ -514,7 +570,7 @@
     function updateThemeUI(theme) {
       const thumb = document.getElementById('themeThumb');
       if (thumb) {
-        thumb.innerText = theme === 'dark' ? '🌙' : '☀️';
+        thumb.innerHTML = theme === 'dark' ? moonSvgMarkup : sunSvgMarkup;
       }
     }
 
@@ -618,7 +674,7 @@
         wrapper.appendChild(drawer);
         wrapper.appendChild(card);
 
-        attachSwipeHandler(card, drawer);
+        attachSwipeHandler(wrapper, card, drawer);
 
         listContainer.appendChild(wrapper);
       });
@@ -626,7 +682,7 @@
       updateProgress();
     }
 
-    function attachSwipeHandler(card, drawer) {
+    function attachSwipeHandler(wrapper, card, drawer) {
       let startX = 0;
       let currentX = 0;
       let isSwiping = false;
@@ -689,7 +745,7 @@
           if (isOpen) {
             card.style.transform = `translateX(${OPEN_OFFSET}px)`;
           } else {
-            card.style.transform = 'translateX(0px)';
+            controller.close();
           }
         }
       });
