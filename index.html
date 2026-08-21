@@ -440,7 +440,7 @@
 
   <header>
     <h1>— Naples Coffee Tour —</h1>
-    <p class="subtitle">Your relaxed guide to 30 local coffee spots</p>
+    <p class="subtitle">Your relaxed guide to local coffee spots</p>
     
     <!-- Animated Pill Theme Toggle Button with SVGs -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
@@ -476,7 +476,7 @@
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
-    <div class="progress-text" id="progressText">0 / 30 Visited</div>
+    <div class="progress-text" id="progressText">0 / 31 Visited</div>
   </header>
 
   <div class="controls-container">
@@ -485,6 +485,7 @@
       <button class="filter-btn" onclick="setMainFilter('Naples')">Naples</button>
       <button class="filter-btn" onclick="setMainFilter('Marco Island')">Marco Island</button>
       <button class="filter-btn" onclick="setMainFilter('Mobile')">Mobile Carts</button>
+      <button class="filter-btn" onclick="setMainFilter('Home')">Coffee at Home</button>
     </div>
 
     <div class="sub-filter-bar" id="subFilterBar"></div>
@@ -524,7 +525,8 @@
       { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, Naples, FL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces" },
       { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, Naples, FL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating" },
       { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, Naples, FL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area" },
-      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" }
+      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" },
+      { name: "Coffee at Home", zone: "Home", area: "Home Kitchen", loc: "Your Kitchen, Naples, FL", drink: "Perfect Drip Coffee / Perfect Pod Coffee", pair: "Whatever is currently in the pantry/fridge", hours: "Always Open (24/7)", vibe: "Ultimate comfort, cozy pajamas style", seating: "Kitchen counter or couch" }
     ];
 
     let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
@@ -560,7 +562,7 @@
       const subBar = document.getElementById('subFilterBar');
       subBar.innerHTML = '';
 
-      if (currentMainFilter === 'All' || currentMainFilter === 'Mobile') {
+      if (currentMainFilter === 'All' || currentMainFilter === 'Mobile' || currentMainFilter === 'Home') {
         subBar.classList.remove('visible');
         return;
       }
@@ -599,7 +601,9 @@
         const card = document.createElement('div');
         card.className = `shop-card ${isDone ? 'completed' : ''}`;
 
-        const appleMapUrl = `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
+        const appleMapUrl = shop.zone === 'Home' 
+          ? '#' 
+          : `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
 
         card.innerHTML = `
           <div class="shop-main-row">
@@ -624,7 +628,7 @@
             <div class="detail-row"><strong>Hours:</strong> <span>${shop.hours || 'N/A'}</span></div>
             <div class="detail-row"><strong>Vibe:</strong> <span>${shop.vibe || 'N/A'}</span></div>
             <div class="detail-row"><strong>Seating:</strong> <span>${shop.seating || 'N/A'}</span></div>
-            <a class="map-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open in Maps</a>
+            ${shop.zone === 'Home' ? '' : `<a class="map-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open in Maps</a>`}
           </div>
         `;
 
