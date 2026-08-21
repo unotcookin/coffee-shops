@@ -1,1 +1,347 @@
-index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Naples Coffee Tour</title>
+  <style>
+    :root {
+      --bg: #F9F6F0;
+      --card-bg: #FFFFFF;
+      --primary: #2C1810;
+      --accent: #C87D55;
+      --accent-light: #F2E3D5;
+      --text: #333333;
+      --text-muted: #777777;
+      --border: #E8DFD8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px;
+      padding-bottom: 40px;
+      -webkit-user-select: none;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: var(--primary);
+      margin: 0 0 4px 0;
+      font-size: 24px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0 0 16px 0;
+    }
+
+    .progress-container {
+      background: var(--border);
+      border-radius: 10px;
+      height: 12px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      background: var(--accent);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--accent);
+      text-align: right;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .shop-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .shop-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .shop-card.completed {
+      background: #F2F5F2;
+      border-color: #D3E0D3;
+      opacity: 0.8;
+    }
+
+    .checkbox {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .shop-card.completed .checkbox {
+      background: var(--accent);
+    }
+
+    .checkbox::after {
+      content: "✓";
+      color: white;
+      font-size: 14px;
+      display: none;
+    }
+
+    .shop-card.completed .checkbox::after {
+      display: block;
+    }
+
+    .shop-info {
+      flex-grow: 1;
+    }
+
+    .map-link {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+    }
+
+    .shop-name {
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .shop-card.completed .shop-name {
+      text-decoration: line-through;
+    }
+
+    .shop-location {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .address-text {
+      color: var(--accent);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .recommendations {
+      background: var(--accent-light);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .rec-item {
+      margin-bottom: 4px;
+    }
+
+    .rec-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .rec-label {
+      font-weight: bold;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>☕ Naples Coffee Tour</h1>
+    <p class="subtitle">Your interactive guide to 30 local coffee spots</p>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">0 / 30 Visited</div>
+  </header>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterShops('All')">All Spots</button>
+    <button class="filter-btn" onclick="filterShops('Naples')">Naples</button>
+    <button class="filter-btn" onclick="filterShops('Marco Island')">Marco Island</button>
+    <button class="filter-btn" onclick="filterShops('Mobile')">Mobile Carts</button>
+  </div>
+
+  <div class="shop-list" id="shopList"></div>
+
+  <script>
+    const shops = [
+      { name: "Narrative Coffee Roasters", zone: "Naples", loc: "9106 Strada Pl, Naples, FL 34108", drink: "Draft Nitro Cold Brew / Honey Lavender Latte", pair: "House-baked cardamom buns / avocado toast" },
+      { name: "Fit & Fuel Bicycle Cafe", zone: "Naples", loc: "819 Vanderbilt Beach Rd, Naples, FL 34108", drink: "Iced Vanilla Oat Latte / Espresso Macchiato", pair: "Breakfast burrito / protein smoothie bowls" },
+      { name: "Epiphany Bakery & Coffee", zone: "Naples", loc: "1514 Immokalee Rd #117, Naples, FL 34110", drink: "Cortado / Golden Milk Turmeric Latte", pair: "100% GF cinnamon rolls / galettes" },
+      { name: "Three Sixteen Cafe", zone: "Naples", loc: "13500 Tamiami Trl N #1, Naples, FL 34110", drink: "House Chai Latte / Vanilla Bean Flat White", pair: "Toasted bagels / egg breakfast sandwiches" },
+      { name: "Acopio Coffee", zone: "Naples", loc: "5100 Tamiami Trl N Ste 101, Naples, FL 34103", drink: "Colombian Specialty Pour-Over / Iced Dirty Chai", pair: "Sugar-free donuts / Colombian pandebono" },
+      { name: "Heirloom Café & Tea House", zone: "Naples", loc: "4947 Tamiami Trl N #104, Naples, FL 34103", drink: "Iced Chai Tea Latte / Rose Water Latte", pair: "Scones with clotted cream / tea sandwiches" },
+      { name: "Crème de la Crème", zone: "Naples", loc: "4339 Tamiami Trl N, Naples, FL 34103", drink: "Illy Espresso / Iced Vanilla Caramel Latte", pair: "Sweet crepes / fruit tarts / croissants" },
+      { name: "Winfield Street Coffee", zone: "Naples", loc: "1250 Tamiami Trl N #111, Naples, FL 34102", drink: "Peanut Butter Mocha / Nitro Cold Brew", pair: "Breakfast egg & cheese rolls / empanadas" },
+      { name: "Wolfmoon", zone: "Naples", loc: "Commercial Dr, Naples, FL 34104", drink: "Spanish Latte / Iced Matcha Espresso Fusion", pair: "Alpha Butter Croissant / Dulce de Leche pastry" },
+      { name: "Sunburst Cafe", zone: "Naples", loc: "Pine Ridge Rd, Naples, FL 34109", drink: "Costa Rican Pour Over / Sunburst Mocha", pair: "Scratch-made muffins / breakfast scrambles" },
+      { name: "Grain de Cafe", zone: "Naples", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Café au Lait / Espresso Double Shot", pair: "Authentic Parisian almond croissants" },
+      { name: "Cafe Nat", zone: "Naples", loc: "Tamiami Trail N, Naples, FL 34103", drink: "House Specialty Iced Latte / Iced Americano", pair: "Breakfast quiche / morning pastries" },
+      { name: "Porsche Studio Naples Café", zone: "Naples", loc: "625 5th Ave S, Naples, FL 34102", drink: "Barista Craft Espresso / Nitro Cold Brew", pair: "Gourmet biscotti / light pastries" },
+      { name: "Bontà Bakery", zone: "Naples", loc: "824 5th Ave S, Naples, FL 34102", drink: "Authentic Italian Cappuccino / Iced Flat White", pair: "Pistachio-filled croissant / bomboloni" },
+      { name: "GLDN Hour Coffee Co", zone: "Naples", loc: "900 6th Ave S, Naples, FL 34102", drink: "Guava Mama Matcha / Miso Caramel Latte", pair: "Artisanal toast / craft breakfast pastries" },
+      { name: "Sendo de Café", zone: "Naples", loc: "534 Park St, Naples, FL 34102", drink: "Single-Origin Espresso / Specialty Latte", pair: "Local baked treats" },
+      { name: "Bean to Cup Coffee Lounge", zone: "Naples", loc: "3570 Bayshore Dr, Naples, FL 34112", drink: "Craft Cold Brew / Vanilla Bean Latte", pair: "Bagels / morning breakfast wraps" },
+      { name: "The Brick Coffee & Bar", zone: "Naples", loc: "5th Ave S, Naples, FL 34102", drink: "Iced Caramel Macchiato / Espresso Tonic", pair: "Flatbreads / paninis / acai bowls" },
+      { name: "Divine Naples Coffee & Wine", zone: "Naples", loc: "4th Ave S, Naples, FL 34102", drink: "Traditional Italian Cappuccino / Affogato", pair: "Artisanal gelato / cannoli" },
+      { name: "Rumba Cuban Cafe", zone: "Naples", loc: "Airport-Pulling Rd, Naples, FL 34104", drink: "Café con Leche / Cuban Colada", pair: "Pan Cubano / Pastelito de Guayaba" },
+      { name: "Santa Fe Cafe", zone: "Naples", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Colombian Drip / Iced Dulce de Leche Latte", pair: "Homemade Colombian empanadas" },
+      { name: "Wake Up Marco", zone: "Marco Island", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Trooper Latte / Wake Up Mocha", pair: "Breakfast sandwiches / cinnamon rolls" },
+      { name: "MICRo", zone: "Marco Island", loc: "Bald Eagle Dr, Marco Island, FL 34145", drink: "Single-Origin Pour Over / Micro-Batch Cold Brew", pair: "Artisanal croissants / energy bites" },
+      { name: "Ori's Bakery & Café", zone: "Marco Island", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Roasted Iced Latte / Cappuccino", pair: "Fresh-baked South American pastries" },
+      { name: "Cafe Marquise", zone: "Marco Island", loc: "Marco Island, FL 34145", drink: "European Espresso / Iced Matcha Latte", pair: "French macarons / fruit pastries" },
+      { name: "Yim Coffee", zone: "Mobile", loc: "Pop-up Cart, Naples, FL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods" },
+      { name: "Awaken Apothecary Coffee", zone: "Mobile", loc: "Mobile Bar, Naples, FL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks" },
+      { name: "The Bean Trolley", zone: "Mobile", loc: "Pop-up Trolley, Naples, FL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners" },
+      { name: "Four Roots Coffee", zone: "Mobile", loc: "Mobile Espresso Cart, Naples, FL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies" },
+      { name: "Countries Coffee Trailer", zone: "Mobile", loc: "Coffee Trailer, Naples, FL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads" },
+      { name: "Drip Coffee Bar", zone: "Mobile", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods" }
+    ];
+
+    let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
+    let currentFilter = 'All';
+
+    function renderShops() {
+      const listContainer = document.getElementById('shopList');
+      listContainer.innerHTML = '';
+
+      const filtered = currentFilter === 'All' 
+        ? shops 
+        : shops.filter(s => s.zone === currentFilter);
+
+      filtered.forEach((shop) => {
+        const isDone = completedShops.includes(shop.name);
+        
+        const card = document.createElement('div');
+        card.className = `shop-card ${isDone ? 'completed' : ''}`;
+
+        const checkbox = document.createElement('div');
+        checkbox.className = 'checkbox';
+        checkbox.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleShop(shop.name);
+        });
+
+        const info = document.createElement('div');
+        info.className = 'shop-info';
+
+        // Apple Maps Link with target="_blank" so iOS launches Apple Maps externally
+        const appleMapUrl = `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
+
+        const mapAnchor = document.createElement('a');
+        mapAnchor.className = 'map-link';
+        mapAnchor.href = appleMapUrl;
+        mapAnchor.target = '_blank';
+        mapAnchor.rel = 'noopener';
+
+        mapAnchor.innerHTML = `
+          <div class="shop-name">${shop.name}</div>
+          <div class="shop-location">📍 <span class="address-text">${shop.loc}</span></div>
+        `;
+
+        const recs = document.createElement('div');
+        recs.className = 'recommendations';
+        recs.innerHTML = `
+          <div class="rec-item"><span class="rec-label">Drink:</span> ${shop.drink}</div>
+          <div class="rec-item"><span class="rec-label">Pairing:</span> ${shop.pair}</div>
+        `;
+
+        info.appendChild(mapAnchor);
+        info.appendChild(recs);
+
+        card.appendChild(checkbox);
+        card.appendChild(info);
+
+        listContainer.appendChild(card);
+      });
+
+      updateProgress();
+    }
+
+    function toggleShop(name) {
+      if (completedShops.includes(name)) {
+        completedShops = completedShops.filter(item => item !== name);
+      } else {
+        completedShops.push(name);
+      }
+      localStorage.setItem('naplesCoffeeCompleted', JSON.stringify(completedShops));
+      renderShops();
+    }
+
+    function updateProgress() {
+      const total = shops.length;
+      const count = completedShops.length;
+      const percentage = (count / total) * 100;
+      
+      document.getElementById('progressBar').style.width = `${percentage}%`;
+      document.getElementById('progressText').innerText = `${count} / ${total} Visited`;
+    }
+
+    function filterShops(zone) {
+      currentFilter = zone;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.includes(zone) || (zone === 'All' && btn.innerText.includes('All')));
+      });
+      renderShops();
+    }
+
+    renderShops();
+  </script>
+</body>
+</html>
