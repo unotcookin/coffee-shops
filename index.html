@@ -22,8 +22,6 @@
       --completed-check: #2D5A43;
       --toggle-bg: rgba(0, 0, 0, 0.15);
       --toggle-thumb: #FFFFFF;
-      --icon-inactive: #6B7C73;       /* Inactive icon color */
-      --icon-active: #1C3127;         /* Active icon color */
     }
 
     [data-theme="dark"] {
@@ -43,8 +41,6 @@
       --completed-check: #406352;
       --toggle-bg: rgba(255, 255, 255, 0.2);
       --toggle-thumb: #1A231F;
-      --icon-inactive: #94A89D;
-      --icon-active: #D1E7DD;
     }
 
     body {
@@ -137,7 +133,6 @@
       transition: stroke 0.3s ease;
     }
 
-    /* Style the thumb icon depending on active theme */
     .theme-toggle-thumb .toggle-icon {
       stroke: var(--primary);
       width: 14px;
@@ -244,83 +239,16 @@
       gap: 14px;
     }
 
-    .shop-card-wrapper {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
+    .shop-card {
       background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.02);
       border: 1.5px solid var(--border);
       transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-
-    /* Details Drawer positioned on the right, hidden underneath */
-    .details-drawer {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      background: linear-gradient(135deg, var(--header-start) 0%, var(--header-end) 100%);
-      color: white;
-      padding: 12px 24px 12px 16px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      text-align: right;
-      gap: 4px;
-      z-index: 1;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .details-title {
-      font-weight: 800;
-      font-size: 13px;
-      color: #FFFFFF;
-      margin-bottom: 2px;
-    }
-
-    .details-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-      color: rgba(255, 255, 255, 0.95);
-      width: 100%;
-      font-size: 11.5px;
-    }
-
-    .details-btn {
-      display: inline-block;
-      margin-top: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      text-decoration: none;
-      padding: 5px 12px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 11px;
-      width: fit-content;
-      backdrop-filter: blur(4px);
-    }
-
-    .shop-card {
-      position: relative;
-      z-index: 2;
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 16px 85px 16px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
-      touch-action: pan-y;
-      box-sizing: border-box;
-      border: none;
-      overflow: hidden;
     }
 
     .shop-card.completed {
@@ -328,13 +256,18 @@
       opacity: 0.85;
     }
 
+    .shop-main-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
     .checkbox-container {
       display: flex;
       justify-content: center;
       align-items: center;
       align-self: stretch;
-      width: 56px;
-      margin: -16px 0 -16px -16px;
+      width: 32px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
@@ -373,7 +306,6 @@
     .shop-info {
       flex-grow: 1;
       min-width: 0;
-      overflow: hidden;
     }
 
     .shop-header-line {
@@ -424,7 +356,6 @@
 
     .rec-item {
       margin-bottom: 2px;
-      overflow-x: hidden;
     }
 
     .rec-item:last-child {
@@ -436,13 +367,67 @@
       color: var(--primary);
     }
 
-    .swipe-hint {
-      font-size: 10px;
+    /* Expandable Details Section */
+    .expand-toggle-btn {
+      background: none;
+      border: none;
       color: var(--text-muted);
-      text-align: right;
-      margin-top: 6px;
+      font-size: 11px;
       font-weight: 600;
-      opacity: 0.7;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .expand-toggle-btn span {
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .shop-card.expanded .expand-toggle-btn span {
+      transform: rotate(180deg);
+    }
+
+    .shop-details {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      font-size: 12px;
+    }
+
+    .shop-card.expanded .shop-details {
+      display: flex;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text);
+    }
+
+    .detail-row strong {
+      color: var(--primary);
+    }
+
+    .map-btn {
+      display: inline-block;
+      margin-top: 4px;
+      background: var(--header-start);
+      color: white;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11.5px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -454,7 +439,6 @@
     
     <!-- Animated Pill Theme Toggle Button with SVGs -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-      <!-- Sun SVG Icon -->
       <svg class="toggle-icon" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="5"></circle>
         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -466,13 +450,9 @@
         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </svg>
-
-      <!-- Moon SVG Icon -->
       <svg class="toggle-icon" viewBox="0 0 24 24">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
-
-      <!-- Sliding Thumb with dynamic icon inside -->
       <div class="theme-toggle-thumb" id="themeThumb">
         <svg class="toggle-icon" viewBox="0 0 24 24" id="thumbIcon">
           <circle cx="12" cy="12" r="5"></circle>
@@ -545,9 +525,6 @@
     let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
     let currentMainFilter = 'All';
     let currentSubFilter = 'All Areas';
-    let activeCardController = null;
-
-    const OPEN_OFFSET = -270; 
 
     const sunSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
     const moonSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
@@ -600,7 +577,6 @@
     function renderShops() {
       const listContainer = document.getElementById('shopList');
       listContainer.innerHTML = '';
-      activeCardController = null;
 
       let filtered = currentMainFilter === 'All' 
         ? [...shops] 
@@ -615,140 +591,47 @@
       filtered.forEach((shop) => {
         const isDone = completedShops.includes(shop.name);
         
-        const wrapper = document.createElement('div');
-        wrapper.className = 'shop-card-wrapper';
-
-        const appleMapUrl = `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
-
-        const drawer = document.createElement('div');
-        drawer.className = 'details-drawer';
-        drawer.innerHTML = `
-          <div class="details-title">Business Info</div>
-          <div class="details-row"><strong>Hours:</strong> ${shop.hours || 'N/A'}</div>
-          <div class="details-row"><strong>Vibe:</strong> ${shop.vibe || 'N/A'}</div>
-          <div class="details-row"><strong>Seating:</strong> ${shop.seating || 'N/A'}</div>
-          <a class="details-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open Map</a>
-        `;
-
         const card = document.createElement('div');
         card.className = `shop-card ${isDone ? 'completed' : ''}`;
 
-        const checkboxContainer = document.createElement('div');
-        checkboxContainer.className = 'checkbox-container';
-        checkboxContainer.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleShop(shop.name);
-        });
+        const appleMapUrl = `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
 
-        const checkbox = document.createElement('div');
-        checkbox.className = 'checkbox';
-        checkboxContainer.appendChild(checkbox);
-
-        const info = document.createElement('div');
-        info.className = 'shop-info';
-
-        info.innerHTML = `
-          <div class="shop-header-line">
-            <span class="shop-name">${shop.name}</span>
-            <span class="area-badge">${shop.area}</span>
+        card.innerHTML = `
+          <div class="shop-main-row">
+            <div class="checkbox-container" onclick="toggleShop('${shop.name.replace(/'/g, "\\'")}')">
+              <div class="checkbox"></div>
+            </div>
+            <div class="shop-info">
+              <div class="shop-header-line">
+                <span class="shop-name">${shop.name}</span>
+                <span class="area-badge">${shop.area}</span>
+              </div>
+              <div class="recommendations">
+                <div class="rec-item"><span class="rec-label">Drink:</span> ${shop.drink}</div>
+                <div class="rec-item"><span class="rec-label">Pairing:</span> ${shop.pair}</div>
+              </div>
+              <button class="expand-toggle-btn" onclick="toggleCardExpand(this)">
+                More Info & Hours <span>▼</span>
+              </button>
+            </div>
+          </div>
+          <div class="shop-details">
+            <div class="detail-row"><strong>Hours:</strong> <span>${shop.hours || 'N/A'}</span></div>
+            <div class="detail-row"><strong>Vibe:</strong> <span>${shop.vibe || 'N/A'}</span></div>
+            <div class="detail-row"><strong>Seating:</strong> <span>${shop.seating || 'N/A'}</span></div>
+            <a class="map-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open in Maps</a>
           </div>
         `;
 
-        const recs = document.createElement('div');
-        recs.className = 'recommendations';
-        recs.innerHTML = `
-          <div class="rec-item"><span class="rec-label">Drink:</span> ${shop.drink}</div>
-          <div class="rec-item"><span class="rec-label">Pairing:</span> ${shop.pair}</div>
-        `;
-
-        const hint = document.createElement('div');
-        hint.className = 'swipe-hint';
-        hint.innerText = '‹ Swipe left for info';
-
-        info.appendChild(recs);
-        info.appendChild(hint);
-
-        card.appendChild(checkboxContainer);
-        card.appendChild(info);
-
-        wrapper.appendChild(drawer);
-        wrapper.appendChild(card);
-
-        attachSwipeHandler(wrapper, card, drawer);
-
-        listContainer.appendChild(wrapper);
+        listContainer.appendChild(card);
       });
 
       updateProgress();
     }
 
-    function attachSwipeHandler(wrapper, card, drawer) {
-      let startX = 0;
-      let currentX = 0;
-      let isSwiping = false;
-      let isOpen = false;
-
-      const controller = {
-        close: () => {
-          card.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
-          card.style.transform = 'translateX(0px)';
-          isOpen = false;
-          if (activeCardController === controller) {
-            activeCardController = null;
-          }
-        }
-      };
-
-      drawer.addEventListener('click', () => {
-        controller.close();
-      });
-
-      card.addEventListener('touchstart', (e) => {
-        if (activeCardController && activeCardController !== controller) {
-          activeCardController.close();
-        }
-
-        startX = e.touches[0].clientX;
-        isSwiping = true;
-        card.style.transition = 'none';
-      }, { passive: true });
-
-      card.addEventListener('touchmove', (e) => {
-        if (!isSwiping) return;
-        currentX = e.touches[0].clientX;
-        let diffX = currentX - startX;
-
-        if (isOpen) {
-          diffX += OPEN_OFFSET;
-        }
-
-        if (diffX < OPEN_OFFSET - 20) diffX = OPEN_OFFSET - 20;
-        if (diffX > 0) diffX = 0;
-
-        card.style.transform = `translateX(${diffX}px)`;
-      }, { passive: true });
-
-      card.addEventListener('touchend', (e) => {
-        if (!isSwiping) return;
-        isSwiping = false;
-        card.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
-
-        const diffX = currentX - startX;
-
-        if (!isOpen && diffX < -50) {
-          card.style.transform = `translateX(${OPEN_OFFSET}px)`;
-          isOpen = true;
-          activeCardController = controller;
-        } else if (isOpen && diffX > 50) {
-          controller.close();
-        } else {
-          if (isOpen) {
-            card.style.transform = `translateX(${OPEN_OFFSET}px)`;
-          } else {
-            controller.close();
-          }
-        }
-      });
+    function toggleCardExpand(btn) {
+      const card = btn.closest('.shop-card');
+      card.classList.toggle('expanded');
     }
 
     function toggleShop(name) {
