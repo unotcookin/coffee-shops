@@ -318,15 +318,13 @@
       opacity: 0.85;
     }
 
-    /* Entire left column click target wrapper */
+    /* Fixed Checkbox container with large comfortable click target */
     .checkbox-container {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      align-self: stretch; /* Stretches from top to the bottom of the card */
-      padding: 0 8px 0 0;
-      margin: -16px 0 -16px -16px; /* Extends padding edge-to-edge on the left */
-      padding-top: 16px;
+      align-self: stretch;
+      padding: 0 12px 0 4px;
+      margin: -16px 0 -16px -16px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
@@ -501,7 +499,7 @@
     let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
     let currentMainFilter = 'All';
     let currentSubFilter = 'All Areas';
-    let currentlyOpenCardHandler = null;
+    let activeCardController = null;
 
     const OPEN_OFFSET = -270;
 
@@ -553,7 +551,7 @@
     function renderShops() {
       const listContainer = document.getElementById('shopList');
       listContainer.innerHTML = '';
-      currentlyOpenCardHandler = null;
+      activeCardController = null;
 
       let filtered = currentMainFilter === 'All' 
         ? [...shops] 
@@ -641,24 +639,25 @@
       let isSwiping = false;
       let isOpen = false;
 
-      const handler = {
+      const controller = {
         close: () => {
           card.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
           card.style.transform = 'translateX(0px)';
           isOpen = false;
-          if (currentlyOpenCardHandler === handler) {
-            currentlyOpenCardHandler = null;
+          if (activeCardController === controller) {
+            activeCardController = null;
           }
         }
       };
 
       drawer.addEventListener('click', () => {
-        handler.close();
+        controller.close();
       });
 
       card.addEventListener('touchstart', (e) => {
-        if (currentlyOpenCardHandler && currentlyOpenCardHandler !== handler) {
-          currentlyOpenCardHandler.close();
+        // Enforce only one card open at a time globally
+        if (activeCardController && activeCardController !== controller) {
+          activeCardController.close();
         }
 
         startX = e.touches[0].clientX;
@@ -691,9 +690,9 @@
         if (!isOpen && diffX < -50) {
           card.style.transform = `translateX(${OPEN_OFFSET}px)`;
           isOpen = true;
-          currentlyOpenCardHandler = handler;
+          activeCardController = controller;
         } else if (isOpen && diffX > 50) {
-          handler.close();
+          controller.close();
         } else {
           if (isOpen) {
             card.style.transform = `translateX(${OPEN_OFFSET}px)`;
