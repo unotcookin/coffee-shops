@@ -6,19 +6,21 @@
   <title>Naples Coffee Tour</title>
   <style>
     :root {
-      --bg: #FFF8F3;
+      --bg: #F4F6F4;                  /* Soft pale sage background */
       --card-bg: #FFFFFF;
-      --primary: #2B1810;
-      --accent-coral: #FF5A42;
-      --accent-amber: #FF9F1C;
-      --accent-bg-soft: #FFE8DC;
-      --badge-bg: #FFF0E6;
-      --text: #2D2A26;
-      --text-muted: #80736B;
-      --border: #F0E3D9;
-      --completed-bg: #F4FAF5;
-      --completed-border: #C8E6C9;
-      --completed-check: #2E7D32;
+      --primary: #1C3127;             /* Deep rich forest green */
+      --header-start: #2A4739;        /* Warm pine */
+      --header-end: #3D6250;          /* Calming eucalyptus */
+      --accent-green: #4E7C65;        /* Soft active button state */
+      --accent-olive: #D4A359;        /* Warm muted amber/gold for sub-highlights */
+      --sub-bg-soft: #E5EDE8;         /* Subtle mint background for chips/tags */
+      --badge-bg: #E3EBE6;
+      --text: #232E28;                /* Dark Slate Green text */
+      --text-muted: #6B7C73;          /* Muted sage-grey text */
+      --border: #D8E2DC;              /* Soft outline */
+      --completed-bg: #EDF3EF;
+      --completed-border: #BCD0C4;
+      --completed-check: #2D5A43;
     }
 
     body {
@@ -34,11 +36,11 @@
     header {
       text-align: center;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, #FF6B4A 0%, #FFA23A 100%);
+      background: linear-gradient(135deg, var(--header-start) 0%, var(--header-end) 100%);
       padding: 20px 16px;
       border-radius: 18px;
       color: white;
-      box-shadow: 0 4px 15px rgba(255, 90, 66, 0.25);
+      box-shadow: 0 4px 15px rgba(28, 49, 39, 0.15);
     }
 
     h1 {
@@ -50,13 +52,13 @@
     }
 
     p.subtitle {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.85);
       font-size: 14px;
       margin: 0 0 16px 0;
     }
 
     .progress-container {
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.25);
       border-radius: 10px;
       height: 12px;
       width: 100%;
@@ -106,14 +108,15 @@
       font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
     }
 
     .filter-btn.active {
-      background: var(--accent-coral);
+      background: var(--header-start);
       color: white;
-      border-color: var(--accent-coral);
-      box-shadow: 0 3px 8px rgba(255, 90, 66, 0.3);
+      border-color: var(--header-start);
+      box-shadow: 0 3px 8px rgba(42, 71, 57, 0.25);
     }
 
     .sub-filter-bar {
@@ -130,7 +133,7 @@
     }
 
     .sub-btn {
-      background: var(--accent-bg-soft);
+      background: var(--sub-bg-soft);
       border: 1px solid var(--border);
       color: var(--primary);
       padding: 6px 12px;
@@ -139,12 +142,13 @@
       font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .sub-btn.active {
-      background: var(--accent-amber);
+      background: var(--accent-green);
       color: white;
-      border-color: var(--accent-amber);
+      border-color: var(--accent-green);
     }
 
     .shop-list {
@@ -161,7 +165,7 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
       transition: all 0.2s ease;
     }
 
@@ -175,7 +179,7 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      border: 2px solid var(--accent-coral);
+      border: 2px solid var(--accent-green);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -231,13 +235,13 @@
       font-size: 11px;
       font-weight: 700;
       background: var(--badge-bg);
-      color: var(--accent-coral);
+      color: var(--header-start);
       padding: 3px 8px;
       border-radius: 10px;
       text-transform: uppercase;
       white-space: nowrap;
       margin-left: 6px;
-      border: 1px solid rgba(255, 90, 66, 0.15);
+      border: 1px solid var(--border);
     }
 
     .shop-card.completed .shop-name {
@@ -252,13 +256,13 @@
     }
 
     .address-text {
-      color: var(--accent-coral);
+      color: var(--accent-green);
       text-decoration: underline;
       font-weight: 600;
     }
 
     .recommendations {
-      background: var(--accent-bg-soft);
+      background: var(--sub-bg-soft);
       border-radius: 10px;
       padding: 10px 12px;
       font-size: 12px;
@@ -275,7 +279,7 @@
 
     .rec-label {
       font-weight: 700;
-      color: var(--accent-coral);
+      color: var(--header-start);
     }
   </style>
 </head>
@@ -283,7 +287,7 @@
 
   <header>
     <h1>✨ Naples Coffee Tour</h1>
-    <p class="subtitle">Your colorful guide to 30 local coffee spots</p>
+    <p class="subtitle">Your relaxed guide to 30 local coffee spots</p>
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -351,7 +355,6 @@
         return;
       }
 
-      // Collect unique areas in the active main filter zone
       const zoneShops = shops.filter(s => s.zone === currentMainFilter);
       const areas = ['All Areas', ...new Set(zoneShops.map(s => s.area))];
 
@@ -370,12 +373,10 @@
       const listContainer = document.getElementById('shopList');
       listContainer.innerHTML = '';
 
-      // 1. Filter by Main Zone
       let filtered = currentMainFilter === 'All' 
         ? [...shops] 
         : shops.filter(s => s.zone === currentMainFilter);
 
-      // 2. Filter by Sub-Area
       if (currentSubFilter !== 'All Areas' && currentMainFilter !== 'All') {
         filtered = filtered.filter(s => s.area === currentSubFilter);
       }
