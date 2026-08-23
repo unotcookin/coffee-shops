@@ -176,26 +176,27 @@
       margin-bottom: 18px;
     }
 
+    /* Updated filter bar to wrap neatly without scrolling */
     .filter-bar {
       display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      -webkit-overflow-scrolling: touch;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
     }
 
     .filter-btn {
       background: var(--card-bg);
       border: 1.5px solid var(--border);
       color: var(--primary);
-      padding: 8px 16px;
+      padding: 7px 12px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      white-space: nowrap;
       cursor: pointer;
       box-shadow: 0 2px 4px rgba(0,0,0,0.02);
       transition: all 0.2s ease;
+      flex-grow: 1;
+      text-align: center;
     }
 
     .filter-btn.active {
@@ -212,6 +213,8 @@
       padding-bottom: 4px;
       padding-top: 2px;
       -webkit-overflow-scrolling: touch;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .sub-filter-bar.visible {
@@ -226,7 +229,6 @@
       border-radius: 14px;
       font-size: 12px;
       font-weight: 600;
-      white-space: nowrap;
       cursor: pointer;
       transition: all 0.2s ease;
     }
