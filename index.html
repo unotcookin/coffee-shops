@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Naples Coffee Tour</title>
+  <title>Naples & Bonita Coffee Tour</title>
   <style>
     :root {
       --bg: #F4F6F4;                  /* Soft pale sage background */
@@ -43,7 +43,6 @@
       --completed-check: #406352;
       --toggle-bg: rgba(255, 255, 255, 0.2);
       --toggle-thumb: #1A231F;
-      /* High-contrast active state for dark mode */
       --filter-active-bg: #D1E7DD;
       --filter-active-text: #121815;
     }
@@ -76,7 +75,7 @@
     h1 {
       color: #FFFFFF;
       margin: 0 0 4px 0;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       letter-spacing: -0.5px;
     }
@@ -439,7 +438,7 @@
 <body>
 
   <header>
-    <h1>— Naples Coffee Tour —</h1>
+    <h1>— Naples & Bonita Coffee Tour —</h1>
     <p class="subtitle">Your relaxed guide to local coffee spots</p>
     
     <!-- Animated Pill Theme Toggle Button with SVGs -->
@@ -476,7 +475,7 @@
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
-    <div class="progress-text" id="progressText">0 / 31 Visited</div>
+    <div class="progress-text" id="progressText">0 / 38 Visited</div>
   </header>
 
   <div class="controls-container">
@@ -484,6 +483,7 @@
       <button class="filter-btn active" onclick="setMainFilter('All')">All Spots</button>
       <button class="filter-btn" onclick="setMainFilter('Naples')">Naples</button>
       <button class="filter-btn" onclick="setMainFilter('Marco Island')">Marco Island</button>
+      <button class="filter-btn" onclick="setMainFilter('Bonita Springs')">Bonita Springs</button>
       <button class="filter-btn" onclick="setMainFilter('Mobile')">Mobile Carts</button>
       <button class="filter-btn" onclick="setMainFilter('Home')">Coffee at Home</button>
     </div>
@@ -495,6 +495,7 @@
 
   <script>
     const shops = [
+      // Naples
       { name: "Fit & Fuel Bicycle Cafe", zone: "Naples", area: "North Naples", loc: "819 Vanderbilt Beach Rd, Naples, FL 34108", drink: "Iced Vanilla Oat Latte / Espresso Macchiato", pair: "Breakfast burrito / protein smoothie bowls", hours: "7:00 AM – 3:00 PM", vibe: "Casual, cyclist-friendly, energetic", seating: "Indoor & Outdoor patio" },
       { name: "Acopio Coffee", zone: "Naples", area: "Midtown", loc: "5100 Tamiami Trl N Ste 101, Naples, FL 34103", drink: "Colombian Specialty Pour-Over / Iced Dirty Chai", pair: "Sugar-free donuts / Colombian pandebono", hours: "7:30 AM – 4:00 PM", vibe: "Modern, Colombian specialty, minimalist", seating: "Indoor bar & café tables" },
       { name: "Epiphany Bakery & Coffee", zone: "Naples", area: "North Naples", loc: "1514 Immokalee Rd #117, Naples, FL 34110", drink: "Cortado / Golden Milk Turmeric Latte", pair: "100% GF cinnamon rolls / galettes", hours: "8:00 AM – 2:00 PM", vibe: "Cozy gluten-free bakery hub", seating: "Limited indoor seating" },
@@ -503,7 +504,7 @@
       { name: "Heirloom Café & Tea House", zone: "Naples", area: "Midtown", loc: "4947 Tamiami Trl N #104, Naples, FL 34103", drink: "Iced Chai Tea Latte / Rose Water Latte", pair: "Scones with clotted cream / tea sandwiches", hours: "8:00 AM – 4:00 PM", vibe: "Charming, English tea house aesthetic", seating: "Indoor parlor & covered outdoor" },
       { name: "Crème de la Crème", zone: "Naples", area: "Midtown", loc: "4339 Tamiami Trl N, Naples, FL 34103", drink: "Illy Espresso / Iced Vanilla Caramel Latte", pair: "Sweet crepes / fruit tarts / croissants", hours: "8:00 AM – 5:00 PM", vibe: "French bistro, elegant & sweet", seating: "Indoor bistro dining" },
       { name: "Winfield Street Coffee", zone: "Naples", area: "Downtown", loc: "1250 Tamiami Trl N #111, Naples, FL 34102", drink: "Peanut Butter Mocha / Nitro Cold Brew", pair: "Breakfast egg & cheese rolls / empanadas", hours: "7:00 AM – 4:00 PM", vibe: "Trendy, fast-casual art cafe", seating: "Indoor seating & street patio" },
-      { name: "Wolfmoon", zone: "Naples", area: "East Naples", loc: "Commercial Dr, Naples, FL 34104", drink: "Spanish Latte / Iced Matcha Espresso Fusion", pair: "Alpha Butter Croissant / Dulce de Leche pastry", hours: "7:30 AM – 2:00 PM", vibe: "Boutique artisanal bakery secret", seating: "Outdoor courtyard" },
+      { name: "Wolfmoon (Naples)", zone: "Naples", area: "East Naples", loc: "Commercial Dr, Naples, FL 34104", drink: "Spanish Latte / Iced Matcha Espresso Fusion", pair: "Alpha Butter Croissant / Dulce de Leche pastry", hours: "7:30 AM – 2:00 PM", vibe: "Boutique artisanal bakery secret", seating: "Outdoor courtyard" },
       { name: "Sunburst Cafe", zone: "Naples", area: "Central Naples", loc: "Pine Ridge Rd, Naples, FL 34109", drink: "Costa Rican Pour Over / Sunburst Mocha", pair: "Scratch-made muffins / breakfast scrambles", hours: "7:00 AM – 2:30 PM", vibe: "Sunny, classic Costa Rican style", seating: "Spacious indoor & outdoor terrace" },
       { name: "Grain de Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Café au Lait / Espresso Double Shot", pair: "Authentic Parisian almond croissants", hours: "7:30 AM – 3:00 PM", vibe: "Authentic French patisserie", seating: "Sidewalk café tables" },
       { name: "Cafe Nat", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "House Specialty Iced Latte / Iced Americano", pair: "Breakfast quiche / morning pastries", hours: "7:00 AM – 3:00 PM", vibe: "Relaxed local gathering space", seating: "Indoor tables" },
@@ -516,20 +517,36 @@
       { name: "Divine Naples Coffee & Wine", zone: "Naples", area: "Downtown", loc: "4th Ave S, Naples, FL 34102", drink: "Traditional Italian Cappuccino / Affogato", pair: "Artisanal gelato / cannoli", hours: "8:00 AM – 8:00 PM", vibe: "Warm European cafe & wine nook", seating: "Cozy indoor & sidewalk" },
       { name: "Rumba Cuban Cafe", zone: "Naples", area: "East Naples", loc: "Airport-Pulling Rd, Naples, FL 34104", drink: "Café con Leche / Cuban Colada", pair: "Pan Cubano / Pastelito de Guayaba", hours: "7:00 AM – 3:00 PM", vibe: "Authentic Cuban coffee counter", seating: "Indoor diner seating" },
       { name: "Santa Fe Cafe", zone: "Naples", area: "Midtown", loc: "Tamiami Trail N, Naples, FL 34103", drink: "Colombian Drip / Iced Dulce de Leche Latte", pair: "Homemade Colombian empanadas", hours: "7:30 AM – 3:30 PM", vibe: "Friendly South American cafe", seating: "Casual indoor seating" },
+      
+      // Marco Island
       { name: "Wake Up Marco", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Trooper Latte / Wake Up Mocha", pair: "Breakfast sandwiches / cinnamon rolls", hours: "6:30 AM – 2:00 PM", vibe: "Island vibe, quick morning spot", seating: "Outdoor covered porch" },
       { name: "MICRo", zone: "Marco Island", area: "Central Marco", loc: "Bald Eagle Dr, Marco Island, FL 34145", drink: "Single-Origin Pour Over / Micro-Batch Cold Brew", pair: "Artisanal croissants / energy bites", hours: "7:00 AM – 2:00 PM", vibe: "Micro-roastery, coffee purist spot", seating: "Minimalist indoor & outdoor" },
       { name: "Ori's Bakery & Café", zone: "Marco Island", area: "North Marco", loc: "N Collier Blvd, Marco Island, FL 34145", drink: "Italian Roasted Iced Latte / Cappuccino", pair: "Fresh-baked South American pastries", hours: "7:00 AM – 3:00 PM", vibe: "Family-run island bakery", seating: "Indoor dining tables" },
       { name: "Cafe Marquise", zone: "Marco Island", area: "Central Marco", loc: "Marco Island, FL 34145", drink: "European Espresso / Iced Matcha Latte", pair: "French macarons / fruit pastries", hours: "8:00 AM – 2:00 PM", vibe: "Chic French pastry parlour", seating: "Boutique indoor seating" },
-      { name: "Yim Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Cart, Naples, FL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods", hours: "Varies by schedule / event", vibe: "Trendy mobile specialty cart", seating: "Standing / event seating" },
-      { name: "Awaken Apothecary Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Bar, Naples, FL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks", hours: "Varies by schedule / event", vibe: "Holistic wellness pop-up", seating: "Event outdoor space" },
-      { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, Naples, FL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces" },
-      { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, Naples, FL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating" },
-      { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, Naples, FL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area" },
-      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, Naples, FL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" },
-      { name: "Coffee at Home", zone: "Home", area: "Home Kitchen", loc: "Your Kitchen, Naples, FL", drink: "Perfect Drip Coffee / Perfect Pod Coffee", pair: "Whatever is currently in the pantry/fridge", hours: "Always Open (24/7)", vibe: "Ultimate comfort, cozy pajamas style", seating: "Kitchen counter or couch" }
+
+      // Bonita Springs
+      { name: "The Warehouse Cafe", zone: "Bonita Springs", area: "Bonita Beach Rd", loc: "4461 Bonita Beach Rd SW, Bonita Springs, FL 34134", drink: "Lavender Orange Matcha Latte / Cold Brew", pair: "Build-your-own açaí bowl / avocado toast", hours: "7:00 AM – 7:00 PM", vibe: "Spacious community hub, clean ingredients", seating: "Indoor & outdoor seating" },
+      { name: "Wolfmoon (Bonita)", zone: "Bonita Springs", area: "Downtown Old 41", loc: "27975 Old 41 Rd #107, Bonita Springs, FL 34135", drink: "Seasonal Craft Latte / Iced Espresso", pair: "House-baked fresh pastries", hours: "7:30 AM – 2:00 PM", vibe: "Reliable, cozy downtown staple", seating: "Indoor & outdoor patio" },
+      { name: "Downtown Coffee & Wine Company", zone: "Bonita Springs", area: "Downtown Old 41", loc: "27546 Old 41 Rd, Bonita Springs, FL 34135", drink: "Specialty Morning Espresso / Cold Brew", pair: "Morning pastry / evening charcuterie", hours: "8:00 AM – 9:00 PM", vibe: "Neighborhood living room style", seating: "Pet-friendly street café patio" },
+      { name: "Vichino's Cafe & Wine Bar", zone: "Bonita Springs", area: "US-41 Corridor", loc: "25987 S Tamiami Trl #100, Bonita Springs, FL 34134", drink: "Pistachio Latte / Small-Batch Espresso", pair: "Made-in-house cinnamon rolls / stuffed bagels", hours: "7:30 AM – 3:00 PM", vibe: "Hard-working family-owned cafe", seating: "Cozy indoor café seating" },
+      { name: "Black Sheep Coffee", zone: "Bonita Springs", area: "Downtown Old 41", loc: "27841 Old 41 Rd Suite B, Bonita Springs, FL 34135", drink: "SCA-Crafted Pour-Over / Nitro Shot / Match Affogato", pair: "Artisanal morning bites", hours: "7:00 AM – 5:00 PM", vibe: "Serious coffee purist, bright minimalism", seating: "Minimalist modern indoor" },
+      { name: "Cali Coffee", zone: "Bonita Springs", area: "Bonita Beach Rd", loc: "Bonita Beach Rd near I-75, Bonita Springs, FL 34134", drink: "Customized Cold Brew / Infused Energy Drinks", pair: "Quick bakery snack", hours: "5:00 AM – 9:00 PM", vibe: "Upbeat commuter-friendly drive-thru", seating: "Drive-thru & limited outdoor" },
+      { name: "Disco Bean Coffee Company", zone: "Bonita Springs", area: "Bonita Beach Rd", loc: "9124 Bonita Beach Rd SE, Bonita Springs, FL 34135", drink: "Colombian Specialty Latte / Drip", pair: "Local fresh-baked treats", hours: "7:30 AM – 2:00 PM", vibe: "Groovy vinyl record shop & café combo", seating: "Indoor crate-digging lounge" },
+      { name: "Survey Cafe", zone: "Bonita Springs", area: "Historic Downtown", loc: "10530 Wilson St, Bonita Springs, FL 34135", drink: "Traditional European Latte / Iced Coffee", pair: "Café breakfast sandwich / quiche", hours: "8:00 AM – 2:00 PM", vibe: "Historic, charming old Florida cottage", seating: "Shaded garden patio" },
+
+      // Mobile Carts
+      { name: "Yim Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Cart, SWFL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods", hours: "Varies by schedule / event", vibe: "Trendy mobile specialty cart", seating: "Standing / event seating" },
+      { name: "Awaken Apothecary Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Bar, SWFL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks", hours: "Varies by schedule / event", vibe: "Holistic wellness pop-up", seating: "Event outdoor space" },
+      { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, SWFL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces" },
+      { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, SWFL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating" },
+      { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, SWFL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area" },
+      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, SWFL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" },
+
+      // Home
+      { name: "Coffee at Home", zone: "Home", area: "Home Kitchen", loc: "Your Kitchen", drink: "Perfect Drip Coffee / Perfect Pod Coffee", pair: "Whatever is currently in the pantry/fridge", hours: "Always Open (24/7)", vibe: "Ultimate comfort, cozy pajamas style", seating: "Kitchen counter or couch" }
     ];
 
-    let completedShops = JSON.parse(localStorage.getItem('naplesCoffeeCompleted')) || [];
+    let completedShops = JSON.parse(localStorage.getItem('naplesBonitaCoffeeCompleted')) || [];
     let currentMainFilter = 'All';
     let currentSubFilter = 'All Areas';
 
@@ -538,7 +555,7 @@
 
     // Theme Initialization
     function initTheme() {
-      const savedTheme = localStorage.getItem('naplesCoffeeTheme') || 'light';
+      const savedTheme = localStorage.getItem('naplesBonitaCoffeeTheme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
       updateThemeUI(savedTheme);
     }
@@ -547,7 +564,7 @@
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('naplesCoffeeTheme', newTheme);
+      localStorage.setItem('naplesBonitaCoffeeTheme', newTheme);
       updateThemeUI(newTheme);
     }
 
@@ -649,7 +666,7 @@
       } else {
         completedShops.push(name);
       }
-      localStorage.setItem('naplesCoffeeCompleted', JSON.stringify(completedShops));
+      localStorage.setItem('naplesBonitaCoffeeCompleted', JSON.stringify(completedShops));
       renderShops();
     }
 
