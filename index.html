@@ -380,6 +380,32 @@
       color: var(--primary);
     }
 
+    /* Styled Schedule List for Mobile Carts */
+    .schedule-list {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .schedule-item {
+      display: flex;
+      flex-direction: column;
+      background: var(--sub-bg-soft);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+
+    .schedule-days {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .schedule-location {
+      color: var(--text);
+    }
+
     .expand-toggle-btn {
       background: none;
       border: none;
@@ -392,7 +418,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      margin-top: 2px;
+      margin-top: 6px;
     }
 
     .expand-toggle-btn span {
@@ -544,13 +570,85 @@
       { name: "Disco Bean Coffee Company", zone: "Bonita Springs", area: "Bonita Beach Rd", loc: "9124 Bonita Beach Rd SE, Bonita Springs, FL 34135", drink: "Colombian Specialty Latte / Drip", pair: "Local fresh-baked treats", hours: "7:30 AM – 2:00 PM", vibe: "Groovy vinyl record shop & café combo", seating: "Indoor crate-digging lounge" },
       { name: "Survey Cafe", zone: "Bonita Springs", area: "Historic Downtown", loc: "10530 Wilson St, Bonita Springs, FL 34135", drink: "Traditional European Latte / Iced Coffee", pair: "Café breakfast sandwich / quiche", hours: "8:00 AM – 2:00 PM", vibe: "Historic, charming old Florida cottage", seating: "Shaded garden patio" },
 
-      // Mobile Carts
-      { name: "Yim Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Vineyard Park, SWFL", drink: "Signature Iced Coffee / Draft Cold Brew", pair: "Pop-up baked goods", hours: "Wed & Fri: 8:00 AM – 11:00 AM (Vineyard Park)", vibe: "Trendy mobile specialty cart", seating: "Standing / event seating" },
-      { name: "Awaken Apothecary Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Yoga House Naples, SWFL", drink: "Iced Banana Bread Latte / Adaptogen Lattes", pair: "Plant-based wellness snacks", hours: "Wed & Sat: 8:00 AM – 12:00 PM (Yoga House Naples)", vibe: "Holistic wellness pop-up", seating: "Event outdoor space" },
-      { name: "The Bean Trolley", zone: "Mobile", area: "Mobile Carts", loc: "Pop-up Trolley, SWFL", drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", pair: "Pop-up pastry partners", hours: "Varies by schedule / event", vibe: "Charming vintage mobile trolley", seating: "Outdoor pop-up spaces" },
-      { name: "Four Roots Coffee", zone: "Mobile", area: "Mobile Carts", loc: "Mobile Espresso Cart, SWFL", drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", pair: "Artisanal pop-up cookies", hours: "Varies by schedule / event", vibe: "Craft mobile espresso experience", seating: "Pop-up venue seating" },
-      { name: "Countries Coffee Trailer", zone: "Mobile", area: "Mobile Carts", loc: "Coffee Trailer, SWFL", drink: "Latino Specialty Mocha / Iced Horchata Latte", pair: "Traditional sweet breads", hours: "Varies by schedule / event", vibe: "Vibrant trailer serving global roasts", seating: "Outdoor food truck area" },
-      { name: "Drip Coffee Bar", zone: "Mobile", area: "Mobile Carts", loc: "SWFL Mobile Cart, SWFL", drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", pair: "Farmer's market baked goods", hours: "Farmer's Markets & Pop-ups", vibe: "Fresh outdoor market coffee bar", seating: "Market seating" },
+      // Mobile Carts (Structured Schedule List)
+      { 
+        name: "Yim Coffee", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "Vineyard Park, SWFL", 
+        drink: "Signature Iced Coffee / Draft Cold Brew", 
+        pair: "Pop-up baked goods", 
+        vibe: "Trendy mobile specialty cart", 
+        seating: "Standing / event seating",
+        schedule: [
+          { days: "Wednesdays & Fridays", details: "8:00 AM – 11:00 AM @ Vineyard Park" }
+        ]
+      },
+      { 
+        name: "Awaken Apothecary Coffee", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "Yoga House Naples, SWFL", 
+        drink: "Iced Banana Bread Latte / Adaptogen Lattes", 
+        pair: "Plant-based wellness snacks", 
+        vibe: "Holistic wellness pop-up", 
+        seating: "Event outdoor space",
+        schedule: [
+          { days: "Wednesdays & Saturdays", details: "8:00 AM – 12:00 PM @ Yoga House Naples" }
+        ]
+      },
+      { 
+        name: "The Bean Trolley", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "Pop-up Trolley, SWFL", 
+        drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", 
+        pair: "Pop-up pastry partners", 
+        vibe: "Charming vintage mobile trolley", 
+        seating: "Outdoor pop-up spaces",
+        schedule: [
+          { days: "Varies", details: "Check social media / events" }
+        ]
+      },
+      { 
+        name: "Four Roots Coffee", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "Mobile Espresso Cart, SWFL", 
+        drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", 
+        pair: "Artisanal pop-up cookies", 
+        vibe: "Craft mobile espresso experience", 
+        seating: "Pop-up venue seating",
+        schedule: [
+          { days: "Varies", details: "Check social media / events" }
+        ]
+      },
+      { 
+        name: "Countries Coffee Trailer", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "Coffee Trailer, SWFL", 
+        drink: "Latino Specialty Mocha / Iced Horchata Latte", 
+        pair: "Traditional sweet breads", 
+        vibe: "Vibrant trailer serving global roasts", 
+        seating: "Outdoor food truck area",
+        schedule: [
+          { days: "Varies", details: "Check social media / events" }
+        ]
+      },
+      { 
+        name: "Drip Coffee Bar", 
+        zone: "Mobile", 
+        area: "Mobile Carts", 
+        loc: "SWFL Mobile Cart, SWFL", 
+        drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", 
+        pair: "Farmer's market baked goods", 
+        vibe: "Fresh outdoor market coffee bar", 
+        seating: "Market seating",
+        schedule: [
+          { days: "Farmer's Markets", details: "Check weekend markets" }
+        ]
+      },
 
       // Home
       { name: "Coffee at Home", zone: "Home", area: "Home Kitchen", loc: "Your Kitchen", drink: "Perfect Drip Coffee / Perfect Pod Coffee", pair: "Whatever is currently in the pantry/fridge", hours: "Always Open (24/7)", vibe: "Ultimate comfort, cozy pajamas style", seating: "Kitchen counter or couch" }
@@ -631,6 +729,24 @@
           ? '#' 
           : `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
 
+        // Build schedule HTML for mobile carts if available, else fallback to standard hours string
+        let scheduleContent = '';
+        if (shop.schedule) {
+          let scheduleItemsHtml = shop.schedule.map(item => `
+            <div class="schedule-item">
+              <span class="schedule-days">${item.days}</span>
+              <span class="schedule-location">${item.details}</span>
+            </div>
+          `).join('');
+          
+          scheduleContent = `
+            <div class="rec-item"><span class="rec-label">Schedule:</span></div>
+            <div class="schedule-list">${scheduleItemsHtml}</div>
+          `;
+        } else {
+          scheduleContent = `<div class="rec-item"><span class="rec-label">Hours:</span> ${shop.hours || 'N/A'}</div>`;
+        }
+
         card.innerHTML = `
           <div class="shop-main-row">
             <div class="checkbox-container" onclick="toggleShop('${shop.name.replace(/'/g, "\\'")}')">
@@ -644,14 +760,14 @@
               <div class="recommendations">
                 <div class="rec-item"><span class="rec-label">Drink:</span> ${shop.drink}</div>
                 <div class="rec-item"><span class="rec-label">Pairing:</span> ${shop.pair}</div>
+                ${scheduleContent}
               </div>
               <button class="expand-toggle-btn" onclick="toggleCardExpand(this)">
-                More Info & Hours <span>▼</span>
+                More Info <span>▼</span>
               </button>
             </div>
           </div>
           <div class="shop-details">
-            <div class="detail-row"><strong>Hours:</strong> <span>${shop.hours || 'N/A'}</span></div>
             <div class="detail-row"><strong>Vibe:</strong> <span>${shop.vibe || 'N/A'}</span></div>
             <div class="detail-row"><strong>Seating:</strong> <span>${shop.seating || 'N/A'}</span></div>
             ${shop.zone === 'Home' ? '' : `<a class="map-btn" href="${appleMapUrl}" target="_blank" rel="noopener">Open in Maps</a>`}
