@@ -380,7 +380,7 @@
       color: var(--primary);
     }
 
-    /* Styled Schedule List for Mobile Carts */
+    /* Styled Schedule List for Mobile */
     .schedule-list {
       margin-top: 4px;
       display: flex;
@@ -520,7 +520,7 @@
       <button class="filter-btn" onclick="setMainFilter('Naples')">Naples</button>
       <button class="filter-btn" onclick="setMainFilter('Marco Island')">Marco Island</button>
       <button class="filter-btn" onclick="setMainFilter('Bonita Springs')">Bonita Springs</button>
-      <button class="filter-btn" onclick="setMainFilter('Mobile')">Mobile Carts</button>
+      <button class="filter-btn" onclick="setMainFilter('Mobile')">Mobile</button>
       <button class="filter-btn" onclick="setMainFilter('Home')">Coffee at Home</button>
     </div>
 
@@ -570,11 +570,11 @@
       { name: "Disco Bean Coffee Company", zone: "Bonita Springs", area: "Bonita Beach Rd", loc: "9124 Bonita Beach Rd SE, Bonita Springs, FL 34135", drink: "Colombian Specialty Latte / Drip", pair: "Local fresh-baked treats", hours: "7:30 AM – 2:00 PM", vibe: "Groovy vinyl record shop & café combo", seating: "Indoor crate-digging lounge" },
       { name: "Survey Cafe", zone: "Bonita Springs", area: "Historic Downtown", loc: "10530 Wilson St, Bonita Springs, FL 34135", drink: "Traditional European Latte / Iced Coffee", pair: "Café breakfast sandwich / quiche", hours: "8:00 AM – 2:00 PM", vibe: "Historic, charming old Florida cottage", seating: "Shaded garden patio" },
 
-      // Mobile Carts (Structured Schedule List)
+      // Mobile (Structured Schedule List)
       { 
         name: "Yim Coffee", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "Vineyard Park, SWFL", 
         drink: "Signature Iced Coffee / Draft Cold Brew", 
         pair: "Pop-up baked goods", 
@@ -587,7 +587,7 @@
       { 
         name: "Awaken Apothecary Coffee", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "Yoga House Naples, SWFL", 
         drink: "Iced Banana Bread Latte / Adaptogen Lattes", 
         pair: "Plant-based wellness snacks", 
@@ -600,7 +600,7 @@
       { 
         name: "The Bean Trolley", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "Pop-up Trolley, SWFL", 
         drink: "Honey Cinnamon Cold Brew / Iced Vanilla Chai", 
         pair: "Pop-up pastry partners", 
@@ -613,7 +613,7 @@
       { 
         name: "Four Roots Coffee", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "Mobile Espresso Cart, SWFL", 
         drink: "Draft Oat Milk Latte / Small-Batch Cold Brew", 
         pair: "Artisanal pop-up cookies", 
@@ -626,7 +626,7 @@
       { 
         name: "Countries Coffee Trailer", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "Coffee Trailer, SWFL", 
         drink: "Latino Specialty Mocha / Iced Horchata Latte", 
         pair: "Traditional sweet breads", 
@@ -639,7 +639,7 @@
       { 
         name: "Drip Coffee Bar", 
         zone: "Mobile", 
-        area: "Mobile Carts", 
+        area: "Mobile", 
         loc: "SWFL Mobile Cart, SWFL", 
         drink: "Nitro Cold Brew on Tap / Iced Green Tea Latte", 
         pair: "Farmer's market baked goods", 
@@ -729,7 +729,6 @@
           ? '#' 
           : `https://maps.apple.com/?q=${encodeURIComponent(shop.name + ' ' + shop.loc)}`;
 
-        // Build schedule HTML for mobile carts if available, else fallback to standard hours string
         let scheduleContent = '';
         if (shop.schedule) {
           let scheduleItemsHtml = shop.schedule.map(item => `
