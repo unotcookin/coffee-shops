@@ -75,15 +75,25 @@
     h1 {
       color: #FFFFFF;
       margin: 0 0 4px 0;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.5px;
+      line-height: 1.25;
+    }
+
+    .title-line-2 {
+      display: block;
+      font-size: 19px;
+      font-weight: 600;
+      opacity: 0.92;
+      margin-top: 2px;
+      letter-spacing: 0.2px;
     }
 
     p.subtitle {
       color: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
-      margin: 0 0 12px 0;
+      font-size: 13.5px;
+      margin: 6px 0 12px 0;
     }
 
     /* Animated Pill Theme Toggle */
@@ -176,7 +186,7 @@
       margin-bottom: 18px;
     }
 
-    /* Updated filter bar to wrap neatly without scrolling */
+    /* Filter bar layout wrapping cleanly on one page */
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
@@ -440,7 +450,10 @@
 <body>
 
   <header>
-    <h1>— Naples & Bonita Coffee Tour —</h1>
+    <h1>
+      Naples & Bonita
+      <span class="title-line-2">Coffee Tour</span>
+    </h1>
     <p class="subtitle">Your relaxed guide to local coffee spots</p>
     
     <!-- Animated Pill Theme Toggle Button with SVGs -->
