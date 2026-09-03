@@ -186,7 +186,6 @@
       margin-bottom: 18px;
     }
 
-    /* Filter bar layout wrapping cleanly on one page */
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
@@ -326,20 +325,19 @@
 
     .shop-header-line {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
       gap: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .shop-name {
       font-weight: 800;
       font-size: 16px;
       color: var(--primary);
-      line-height: 1.2;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      line-height: 1.25;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .area-badge {
@@ -347,12 +345,11 @@
       font-weight: 700;
       background: var(--badge-bg);
       color: var(--primary);
-      padding: 3px 6px;
+      padding: 3px 8px;
       border-radius: 8px;
       text-transform: uppercase;
-      white-space: nowrap;
+      width: fit-content;
       border: 1px solid var(--border);
-      flex-shrink: 0;
     }
 
     .shop-card.completed .shop-name {
@@ -383,7 +380,6 @@
       color: var(--primary);
     }
 
-    /* Expandable Details Section */
     .expand-toggle-btn {
       background: none;
       border: none;
@@ -456,7 +452,6 @@
     </h1>
     <p class="subtitle">Your relaxed guide to local coffee spots</p>
     
-    <!-- Animated Pill Theme Toggle Button with SVGs -->
     <div class="theme-toggle-pill" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
       <svg class="toggle-icon" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="5"></circle>
@@ -568,7 +563,6 @@
     const sunSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
     const moonSvgMarkup = `<svg class="toggle-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
 
-    // Theme Initialization
     function initTheme() {
       const savedTheme = localStorage.getItem('naplesBonitaCoffeeTheme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -712,7 +706,6 @@
       renderShops();
     }
 
-    // Run setup on load
     initTheme();
     renderShops();
   </script>
